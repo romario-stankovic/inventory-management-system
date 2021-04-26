@@ -8,9 +8,15 @@ public class Main {
 	
 	static Scanner input = new Scanner(System.in);
 	
+	static String userFilename = "users.txt";
+	
+	static List<User> users = new ArrayList<User>();
+	
 	public static void main(String[] args) {
-				
+		
 		HelperFunctions.LogEvent("system start");
+		
+		LoadUsersFromFile(userFilename);
 		
 		User user = null;
 		
@@ -37,6 +43,42 @@ public class Main {
 
 	}
 	
+	public static void LoadUsersFromFile(String fileUrl) {
+		String[] filelines = FileIO.ReadLines(fileUrl);
+		for(String user : filelines) {
+			String[] fields = user.split(",");
+			UserTypes userType = UserTypes.valueOf(fields[4]);
+			User userObject = null;
+			switch(userType) {
+				case Administrator:
+					userObject = new Administrator(fields[0], fields[1], fields[2], fields[3], userType);
+					break;
+				case ShippingAndReceivingWorker:
+					userObject = new ShippingAndReceivingWorker(fields[0], fields[1], fields[2], fields[3], userType);
+					break;
+				case WarehouseSorter:
+					userObject = new WarehouseSorter(fields[0], fields[1], fields[2], fields[3], userType);
+					break;
+				case Driver:
+					userObject = new Driver(fields[0], fields[1], fields[2], fields[3], userType);
+					break;
+				case Null:
+					userObject = new NullUser(fields[0], fields[1], fields[2], fields[3], userType);
+					break;
+			}
+			users.add(userObject);
+		}
+	}
+	
+	public static void WriteUsersToFile(String fileUrl) {
+		List<String> line = new ArrayList<String>();
+		for(User user : users) {
+			String data = user.username + "," + user.password + "," + user.name + "," + user.lastName + "," + user.type.toString();
+			line.add(data);
+		}
+		FileIO.WriteLines(fileUrl, line.toArray(new String[line.size()]));
+	}
+	
 	private static User LoginMenu() {
 		System.out.println("----------LOGIN----------");
 		String[] users = FileIO.ReadLines("users.txt");
@@ -44,6 +86,7 @@ public class Main {
 		String password;
 		
 		while(true) {
+			HelperFunctions.ClearScreen();
 			System.out.println("Enter username: ");
 			usernameCheck: while(true) {
 				username = input.next();
@@ -104,16 +147,19 @@ public class Main {
 			int choice = HelperFunctions.DisplayMenu(options, null);
 			switch(choice) {
 			case 1:
-				admin.ListAllUsers();
+				admin.ListAllUsers(users);
 				break;
 			case 2: 
-				admin.RegisterNewUser();
+				users = admin.RegisterNewUser(users);
+				WriteUsersToFile(userFilename);
 				break;
 			case 3: 
-				admin.ModifyUser();
+				users = admin.ModifyUser(users);
+				WriteUsersToFile(userFilename);
 				break;
 			case 4:
-				admin.DeleteUser();
+				users = admin.DeleteUser(users);
+				WriteUsersToFile(userFilename);
 				break;
 			case 6: 
 				HelperFunctions.LogEvent("User logout: " + admin.username); 

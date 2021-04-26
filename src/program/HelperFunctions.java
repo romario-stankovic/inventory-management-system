@@ -1,5 +1,6 @@
 package program;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -47,5 +48,9 @@ public class HelperFunctions {
 		input.nextLine();
 		System.out.print("Press ENTER to continue...");
 		input.nextLine();
+	}
+	
+	public static void ClearScreen() {
+		
 	}
 }

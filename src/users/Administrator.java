@@ -14,30 +14,26 @@ public class Administrator extends User {
 		super(username, password, name, lastName, type);
 		input = new Scanner(System.in);
 	}
-
-	public void ListAllUsers() {
-		String[] users = FileIO.ReadLines("users.txt");
+	
+	public void ListAllUsers(List<User> users) {
 		System.out.printf("%15s%15s%15s%30s\n\n", "Username", "Name","Last Name", "User Type");
-		for(String user : users) {
-			String[] fields = user.split(",");
-			System.out.printf("%15s%15s%15s%30s\n", fields[0], fields[2], fields[3], fields[4]);
+		for(User user : users) {
+			System.out.printf("%15s%15s%15s%30s\n", user.username, user.name, user.lastName, user.type);
 		}
 		System.out.println("");
 		HelperFunctions.Pause();
 	}
 	
-	public void RegisterNewUser() {
+	public List<User> RegisterNewUser(List<User> users) {
 		System.out.println("----------REGISTER A NEW USER----------");
-		String[] users = FileIO.ReadLines("users.txt");
 		System.out.println("Enter username: ");
 		
 		String username;
 		
 		usernameInput: while (true) {
 			username = input.next();
-			for (String user : users) {
-				String[] fields = user.split(",");
-				if (username.equals(fields[0])) {
+			for (User user : users) {
+				if (username.equals(user.username)) {
 					System.out.println("Username already taken, try again: ");
 					continue usernameInput;
 				}
@@ -63,35 +59,52 @@ public class Administrator extends User {
 		
 		String[] options = new String[UserTypes.values().length];
 		
+		UserTypes userType;
 		for(int i=0; i<UserTypes.values().length; i++) {
 			options[i] = UserTypes.values()[i].toString();
 		}
 		
 		int choice = HelperFunctions.DisplayMenu(options, "Select type of user: ");
 		
-		String line = username + "," + password + "," + name + "," + lastName + "," + UserTypes.values()[choice-1];
-		if(FileIO.AppendLine("users.txt", line)) {
-			System.out.println("User created successfully!");
-			HelperFunctions.LogEvent(this.username + " registered " + username + " to the system");
-		}else {
-			System.out.println("Error while creating user!");
-		}
-	}
-	
-	public void ModifyUser() {
-		String[] users = FileIO.ReadLines("users.txt");
-		List<String> newUsers = new ArrayList<String>();
-		for(String u : users) {
-			newUsers.add(u);
+		userType = UserTypes.values()[choice-1];
+		
+		User newUser = null;
+		switch(userType) {
+		case Administrator:
+			newUser = new Administrator(username, password, name, lastName, userType);
+			break;
+		case Driver:
+			newUser = new Driver(username, password, name, lastName, userType);
+			break;
+		case ShippingAndReceivingWorker:
+			newUser = new ShippingAndReceivingWorker(username, password, name, lastName, userType);
+			break;
+		case WarehouseSorter:
+			newUser = new WarehouseSorter(username, password, name, lastName, userType);
+			break;
+		case Null:
+			newUser = new NullUser(username, password, name, lastName, userType);
+			break;
 		}
 		
+		users.add(newUser);
+		System.out.println("User registerd successfully!");
+		HelperFunctions.LogEvent(this.username + " registered " + username + " to the system");
+
+		return users;
+	}
+	
+	public List<User> ModifyUser(List<User> users) {
+		
+		User modifyUser;
+		int index;
 		System.out.println("Enter username of the user you want to modify: ");
-		String modifyUsername;
 		usernameInput: while(true) {
-			modifyUsername = input.next();
-			for(String user : newUsers) {
-				String[] fields = user.split(",");
-				if(fields[0].equals(modifyUsername)) {
+			String modifyUsername = input.next();
+			for(User user : users) {
+				if(user.username.equals(modifyUsername)) {
+					modifyUser = user;
+					index = users.indexOf(user);
 					break usernameInput;
 				}
 			}
@@ -107,24 +120,16 @@ public class Administrator extends User {
 			String newUsername;
 			usernameCheck: while(true) {
 				newUsername = input.next();
-				for(String user : users) {
-					String[] fields = user.split(",");
-					if(fields[0].equals(newUsername)) {
+				for(User user : users) {
+					if(user.equals(newUsername)) {
 						System.out.println("Username already taken, try again: ");
 						continue usernameCheck;
 					}
 				}
 				break;
 			}
-			for(int i=0; i<newUsers.size(); i++) {
-				String[] fields = newUsers.get(i).split(",");
-				if(fields[0].equals(modifyUsername)) {
-					String newData = newUsername + "," + fields[1] + "," + fields[2] + "," + fields[3] + "," + fields[4];
-					newUsers.set(i, newData);
-					HelperFunctions.LogEvent(username + " changed the username of " + modifyUsername + " to " + newUsername);
-					break;
-				}
-			}
+			HelperFunctions.LogEvent(username + " changed username of " + modifyUser.username + " to " + newUsername);
+			modifyUser.username = newUsername;
 			break;
 		case 2:
 			System.out.println("Enter new password");
@@ -137,41 +142,23 @@ public class Administrator extends User {
 				}
 				System.out.println("Passwords do not match, try again: ");
 			}
-			for(int i=0; i<newUsers.size(); i++) {
-				String[] fields = newUsers.get(i).split(",");
-				if(fields[0].equals(modifyUsername)) {
-					String newData = fields[0] + "," + newPassword + "," + fields[2] + "," + fields[3] + "," + fields[4];
-					newUsers.set(i, newData);
-					HelperFunctions.LogEvent(username + " changed the password of " + modifyUsername + " to " + newPassword);
-					break;
-				}
-			}
+			modifyUser.password = newPassword;
+			HelperFunctions.LogEvent(username + " changed password of " + modifyUser.username + " to " + newPassword);
+
 			break;
 		case 3:
 			System.out.println("Enter new name: ");
 			String newName = input.next();
-			for(int i=0; i<newUsers.size(); i++) {
-				String[] fields = newUsers.get(i).split(",");
-				if(fields[0].equals(modifyUsername)) {
-					String newData = fields[0] + "," + fields[1] + "," + newName + "," + fields[3] + "," + fields[4];
-					newUsers.set(i, newData);
-					HelperFunctions.LogEvent(username + " changed the name of " + modifyUsername + " to " + newName);
-					break;
-				}
-			}
+			modifyUser.name = newName;
+			HelperFunctions.LogEvent(username + " changed name of " + modifyUser.username + " to " + newName);
+
 			break;
 		case 4:
 			System.out.println("Enter new last name: ");
 			String newLastName = input.next();
-			for(int i=0; i<newUsers.size(); i++) {
-				String[] fields = newUsers.get(i).split(",");
-				if(fields[0].equals(modifyUsername)) {
-					String newData = fields[0] + "," + fields[1] + "," + fields[2] + "," + newLastName + "," + fields[4];
-					newUsers.set(i, newData);
-					HelperFunctions.LogEvent(username + " changed the last name of " + modifyUsername + " to " + newLastName);
-					break;
-				}
-			}
+			modifyUser.lastName = newLastName;
+			HelperFunctions.LogEvent(username + " changed last name of " + modifyUser.username + " to " + newLastName);
+
 			break;
 		case 5:
 			String[] typeOptions = new String[UserTypes.values().length];
@@ -182,36 +169,28 @@ public class Administrator extends User {
 			
 			int typeChoice = HelperFunctions.DisplayMenu(typeOptions, "Select type of user: ");
 			
-			for(int i=0; i<newUsers.size(); i++) {
-				String[] fields = newUsers.get(i).split(",");
-				if(fields[0].equals(modifyUsername)) {
-					String newData = fields[0] + "," + fields[1] + "," + fields[2] + "," + fields[3] + "," + UserTypes.values()[typeChoice-1];
-					newUsers.set(i, newData);
-					HelperFunctions.LogEvent(username + " changed the user type of " + modifyUsername + " to " + UserTypes.values()[typeChoice-1]);
-					break;
-				}
-			}
+			modifyUser.type = UserTypes.values()[typeChoice-1];
+			
+			HelperFunctions.LogEvent(username + " changed type of " + modifyUser.username + " to " + UserTypes.values()[typeChoice-1]);
+
 			break;
 			
 		}
-		FileIO.WriteLines("users.txt", newUsers.toArray(new String[newUsers.size()]));
+		
+		users.set(index, modifyUser);
+		
 		System.out.println("User modified successfully!");
+		return users;
 	}
 	
-	public void DeleteUser() {
-		String[] users = FileIO.ReadLines("users.txt");
-		List<String> newUsers = new ArrayList<String>();
-		for(String u : users) {
-			newUsers.add(u);
-		}
+	public List<User> DeleteUser(List<User> users) {
 		
 		System.out.println("Enter username of the user you want to delete: ");
 		usernameInput: while(true) {
 			String deleteUsername = input.next();
-			for(String user : newUsers) {
-				String[] fields = user.split(",");
-				if(fields[0].equals(deleteUsername)) {
-					newUsers.remove(user);
+			for(User user : users) {
+				if(user.username.equals(deleteUsername)) {
+					users.remove(user);
 					System.out.println("User deleted successfully!");
 					HelperFunctions.LogEvent(this.username + " removed " + deleteUsername + " from the system");
 					break usernameInput;
@@ -219,9 +198,7 @@ public class Administrator extends User {
 			}
 			System.out.println("There is no user with that username, try again: ");
 		}
-		
-		FileIO.WriteLines("users.txt", newUsers.toArray(new String[newUsers.size()]));
-		
+		return users;
 	}
 
 }
