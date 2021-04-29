@@ -8,7 +8,8 @@ public class Main {
 	
 	static Scanner input = new Scanner(System.in);
 	
-	static String userFilename = "users.txt";
+	static final String userFilename = "data\\users.txt";
+	static final String logFilename = "data\\logs.txt";
 	
 	static List<User> users = new ArrayList<User>();
 	
@@ -18,19 +19,22 @@ public class Main {
 		
 		LoadUsersFromFile(userFilename);
 		
-		User user = null;
-		
 		while (true) {
+			User user = null;
 			System.out.println("----------MAIN MENU---------");
 			String[] options = { "Login", "Exit" };
-			int choice;
-			choice = HelperFunctions.DisplayMenu(options, null);
+			int choice = HelperFunctions.DisplayMenu(options, null);
 			switch (choice) {
 			case 1:
 				user = LoginMenu();
 				HelperFunctions.LogEvent("user login: " + user.username);
 				if(user instanceof Administrator) {
 					AdminMenu((Administrator)user);
+				}else if(user instanceof NullUser) {
+					System.out.println("Sorry, you do not have a defined role");
+					System.out.println("Logging out...");
+					HelperFunctions.LogEvent("user logout: " + user.username);
+					HelperFunctions.Pause();
 				}
 				break;
 			case 2:
@@ -43,7 +47,7 @@ public class Main {
 
 	}
 	
-	public static void LoadUsersFromFile(String fileUrl) {
+	private static void LoadUsersFromFile(String fileUrl) {
 		String[] filelines = FileIO.ReadLines(fileUrl);
 		for(String user : filelines) {
 			String[] fields = user.split(",");
@@ -53,11 +57,8 @@ public class Main {
 				case Administrator:
 					userObject = new Administrator(fields[0], fields[1], fields[2], fields[3], userType);
 					break;
-				case ShippingAndReceivingWorker:
-					userObject = new ShippingAndReceivingWorker(fields[0], fields[1], fields[2], fields[3], userType);
-					break;
-				case WarehouseSorter:
-					userObject = new WarehouseSorter(fields[0], fields[1], fields[2], fields[3], userType);
+				case WarehouseWorker:
+					userObject = new WarehouseWorker(fields[0], fields[1], fields[2], fields[3], userType);
 					break;
 				case Driver:
 					userObject = new Driver(fields[0], fields[1], fields[2], fields[3], userType);
@@ -70,29 +71,27 @@ public class Main {
 		}
 	}
 	
-	public static void WriteUsersToFile(String fileUrl) {
-		List<String> line = new ArrayList<String>();
+	private static void WriteUsersToFile(String fileUrl) {
+		List<String> lines = new ArrayList<String>();
 		for(User user : users) {
-			String data = user.username + "," + user.password + "," + user.name + "," + user.lastName + "," + user.type.toString();
-			line.add(data);
+			String line = user.username + "," + user.password + "," + user.name + "," + user.lastName + "," + user.type.toString();
+			lines.add(line);
 		}
-		FileIO.WriteLines(fileUrl, line.toArray(new String[line.size()]));
+		if(!FileIO.WriteLines(fileUrl, lines.toArray(new String[lines.size()]))) {
+			System.out.println("Error while writing users to file...");
+		}
 	}
 	
 	private static User LoginMenu() {
 		System.out.println("----------LOGIN----------");
-		String[] users = FileIO.ReadLines("users.txt");
-		String username;
-		String password;
-		
 		while(true) {
-			HelperFunctions.ClearScreen();
+			String username;
+			String password;
 			System.out.println("Enter username: ");
 			usernameCheck: while(true) {
 				username = input.next();
-				for(String user : users) {
-					String[] fields = user.split(",");
-					if(fields[0].equals(username)) {
+				for(User user : users) {
+					if(user.username.equals(username)) {
 						break usernameCheck;
 					}
 				}
@@ -102,41 +101,14 @@ public class Main {
 			System.out.println("Enter password for " + username + ": ");
 			while (true) {
 				password = input.next();
-				for (String user : users) {
-					String[] fields = user.split(",");
-
-					if (fields[1].equals(password)) {
-						UserTypes userType = UserTypes.valueOf(fields[4]);
-						User u = null;
-
-						switch (userType) {
-						case Administrator:
-							u = new Administrator(fields[0], fields[1], fields[2], fields[3],
-									UserTypes.valueOf(fields[4]));
-							break;
-						case ShippingAndReceivingWorker:
-							u = new ShippingAndReceivingWorker(fields[0], fields[1], fields[2], fields[3],
-									UserTypes.valueOf(fields[4]));
-							break;
-						case WarehouseSorter:
-							u = new WarehouseSorter(fields[0], fields[1], fields[2], fields[3],
-									UserTypes.valueOf(fields[4]));
-							break;
-						case Driver:
-							u = new Driver(fields[0], fields[1], fields[2], fields[3], UserTypes.valueOf(fields[4]));
-							break;
-						case Null:
-							// TODO: Add Null User
-							break;
-						}
-
-						return u;
+				for (User user : users) {
+					if (user.password.equals(password)) {
+						return user;
 					}
 				}
 				System.out.println("Invalid password, try again: ");
 			}
 		}
-		
 	}
 	
 	private static void AdminMenu(Administrator admin) {
@@ -161,8 +133,11 @@ public class Main {
 				users = admin.DeleteUser(users);
 				WriteUsersToFile(userFilename);
 				break;
+			case 5:
+				//TODO: Logs
+				break;
 			case 6: 
-				HelperFunctions.LogEvent("User logout: " + admin.username); 
+				HelperFunctions.LogEvent("user logout: " + admin.username); 
 				return;
 			}
 		}

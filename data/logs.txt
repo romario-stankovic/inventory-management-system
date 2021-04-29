@@ -1,0 +1,5 @@
+[2021-4-27 15:56:36] system start
+[2021-4-27 15:56:46] user login: romario
+[2021-4-27 15:56:59] romario removed luka from the system
+[2021-4-27 15:57:3] user logout: romario
+[2021-4-27 15:57:4] system exit

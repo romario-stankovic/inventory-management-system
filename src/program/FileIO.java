@@ -15,7 +15,7 @@ public class FileIO {
 			}
 			writer.close();
 			return true;
-		} catch (IOException e) {
+		} catch (Exception e) {
 			return false;
 		}
 	}
@@ -28,7 +28,7 @@ public class FileIO {
 			writer.newLine();
 			writer.close();
 			return true;
-		} catch (IOException e) {
+		} catch (Exception e) {
 			return false;
 		}
 	}
@@ -44,7 +44,7 @@ public class FileIO {
 			}
 			reader.close();
 			return lines.toArray(new String[lines.size()]);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			return new String[0];
 		}
 	}

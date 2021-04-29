@@ -2,9 +2,7 @@ package users;
 
 import java.util.*;
 
-import program.FileIO;
 import program.HelperFunctions;
-import program.UserTypes;
 
 public class Administrator extends User {
 
@@ -76,11 +74,8 @@ public class Administrator extends User {
 		case Driver:
 			newUser = new Driver(username, password, name, lastName, userType);
 			break;
-		case ShippingAndReceivingWorker:
-			newUser = new ShippingAndReceivingWorker(username, password, name, lastName, userType);
-			break;
-		case WarehouseSorter:
-			newUser = new WarehouseSorter(username, password, name, lastName, userType);
+		case WarehouseWorker:
+			newUser = new WarehouseWorker(username, password, name, lastName, userType);
 			break;
 		case Null:
 			newUser = new NullUser(username, password, name, lastName, userType);
@@ -91,6 +86,8 @@ public class Administrator extends User {
 		System.out.println("User registerd successfully!");
 		HelperFunctions.LogEvent(this.username + " registered " + username + " to the system");
 
+		HelperFunctions.Pause();
+		
 		return users;
 	}
 	
@@ -111,7 +108,7 @@ public class Administrator extends User {
 			System.out.println("There is no user with that username, try again: ");
 		}
 		
-		String[] options = {"Username", "Password", "Name", "Last Name", "User Type"};
+		String[] options = {"Username", "Password", "Name", "Last Name", "User Type", "Cancel"};
 		int choice = HelperFunctions.DisplayMenu(options, "Select field to modify: ");
 		
 		switch(choice) {
@@ -121,7 +118,7 @@ public class Administrator extends User {
 			usernameCheck: while(true) {
 				newUsername = input.next();
 				for(User user : users) {
-					if(user.equals(newUsername)) {
+					if(user.username.equals(newUsername)) {
 						System.out.println("Username already taken, try again: ");
 						continue usernameCheck;
 					}
@@ -174,12 +171,15 @@ public class Administrator extends User {
 			HelperFunctions.LogEvent(username + " changed type of " + modifyUser.username + " to " + UserTypes.values()[typeChoice-1]);
 
 			break;
+		case 6:
+			return users;
 			
 		}
 		
 		users.set(index, modifyUser);
 		
 		System.out.println("User modified successfully!");
+		HelperFunctions.Pause();
 		return users;
 	}
 	
@@ -198,6 +198,7 @@ public class Administrator extends User {
 			}
 			System.out.println("There is no user with that username, try again: ");
 		}
+		HelperFunctions.Pause();
 		return users;
 	}
 

@@ -1,6 +1,5 @@
 package program;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -16,7 +15,7 @@ public class HelperFunctions {
 		" " + dateTime.getHour() + ":" + dateTime.getMinute() + 
 		":" + dateTime.getSecond() + "] ";
 		
-		FileIO.AppendLine("logs.txt", now + eventText);
+		FileIO.AppendLine("data\\logs.txt", now + eventText);
 	}
 	
 	public static int DisplayMenu(String[] menuOptions, String customMessage) {
