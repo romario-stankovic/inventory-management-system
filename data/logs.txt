@@ -1,5 +1,100 @@
-[2021-4-27 15:56:36] system start
-[2021-4-27 15:56:46] user login: romario
-[2021-4-27 15:56:59] romario removed luka from the system
-[2021-4-27 15:57:3] user logout: romario
-[2021-4-27 15:57:4] system exit
+[2021-04-06 23:59:59] system start
+[2021-04-07 00:00:00] user login: romario
+[2021-05-01 21:37:28] system start
+[2021-05-02 21:37:32] user login: romario
+[2021-05-03 21:40:52] system start
+[2021-05-04 21:40:57] user login: romario
+[2021-05-05 21:41:18] system start
+[2021-05-06 21:41:21] user login: romario
+[2021-05-07 23:59:59] user login: romario
+[2021-05-07 21:55:35] system start
+[2021-05-07 21:55:59] user login: romario
+[2021-05-07 21:56:50] system start
+[2021-05-07 23:59:59] user login: romario
+[2021-05-07 22:03:04] system start
+[2021-05-07 22:03:08] user login: romario
+[2021-05-07 22:03:39] user logout: romario
+[2021-05-07 22:03:42] system exit
+[2021-05-07 22:18:30] system start
+[2021-05-07 22:18:34] user login: romario
+[2021-05-07 22:19:22] system start
+[2021-05-07 22:19:25] user login: romario
+[2021-05-07 22:20:12] system start
+[2021-05-07 22:20:16] user login: romario
+[2021-05-07 22:20:47] system start
+[2021-05-07 22:20:52] user login: romario
+[2021-05-07 22:22:53] system start
+[2021-05-07 22:22:57] user login: romario
+[2021-05-07 22:23:46] system start
+[2021-05-07 22:23:49] user login: romario
+[2021-05-07 22:24:32] system start
+[2021-05-07 22:24:35] user login: romario
+[2021-05-07 22:25:16] system start
+[2021-05-07 22:25:22] user login: romario
+[2021-05-07 22:26:13] system start
+[2021-05-07 22:26:16] user login: romario
+[2021-05-07 22:27:53] system start
+[2021-05-07 22:27:56] user login: romario
+[2021-05-07 22:28:05] system start
+[2021-05-07 22:28:21] user login: romario
+[2021-05-07 22:28:50] system start
+[2021-05-07 22:28:59] user login: romario
+[2021-05-07 22:29:45] system start
+[2021-05-07 22:29:49] user login: romario
+[2021-05-07 22:32:02] system start
+[2021-05-07 22:32:21] user login: romario
+[2021-05-07 22:32:23] user logout: romario
+[2021-05-07 22:32:40] user login: romario
+[2021-05-07 22:32:57] romario registered test to the system
+[2021-05-07 22:32:59] user logout: romario
+[2021-05-07 22:33:02] user login: test
+[2021-05-07 22:33:02] user logout: test
+[2021-05-07 22:33:10] user login: romario
+[2021-05-07 22:33:21] romario changed type of test to Administrator
+[2021-05-07 22:33:26] user logout: romario
+[2021-05-07 22:33:29] user login: test
+[2021-05-07 22:33:29] user logout: test
+[2021-05-07 22:33:38] user login: romario
+[2021-05-07 22:33:49] romario removed test from the system
+[2021-05-07 22:36:33] system start
+[2021-05-07 22:36:36] user login: romario
+[2021-05-07 22:43:53] system start
+[2021-05-07 22:44:02] user login: romario
+[2021-05-07 22:44:58] system start
+[2021-05-07 22:45:01] user login: romario
+[2021-05-07 22:46:08] system start
+[2021-05-07 22:46:12] user login: romario
+[2021-05-07 22:47:50] system start
+[2021-05-07 22:47:53] user login: romario
+[2021-05-07 22:48:47] user logout: romario
+[2021-05-07 22:48:48] system exit
+[2021-05-07 22:51:00] system start
+[2021-05-07 22:51:03] user login: romario
+[2021-05-07 22:51:50] system start
+[2021-05-07 22:51:54] user login: romario
+[2021-05-07 22:54:46] system start
+[2021-05-07 22:54:49] user login: romario
+[2021-05-07 22:55:42] system start
+[2021-05-07 22:55:45] user login: romario
+[2021-05-07 22:57:03] system start
+[2021-05-07 22:57:06] user login: romario
+[2021-05-07 22:58:04] system start
+[2021-05-07 22:58:06] user login: romario
+[2021-05-07 22:58:24] system start
+[2021-05-07 22:58:29] user login: romario
+[2021-05-07 22:58:41] system start
+[2021-05-07 22:58:43] user login: romario
+[2021-05-07 22:59:59] system start
+[2021-05-07 23:00:02] user login: romario
+[2021-05-07 23:00:35] system start
+[2021-05-07 23:00:39] user login: romario
+[2021-05-07 23:01:35] system start
+[2021-05-07 23:01:38] user login: romario
+[2021-05-07 23:01:50] user logout: romario
+[2021-05-07 23:01:51] system exit
+[2021-05-07 23:06:27] system start
+[2021-05-07 23:06:30] user login: romario
+[2021-05-07 23:09:12] system start
+[2021-05-07 23:09:15] user login: romario
+[2021-05-07 23:09:36] user logout: romario
+[2021-05-07 23:09:37] system exit

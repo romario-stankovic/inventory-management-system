@@ -2,49 +2,80 @@ package program;
 
 import users.*;
 
-import java.util.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Main {
 	
-	static Scanner input = new Scanner(System.in);
+	public static Scanner input = new Scanner(System.in);
+	public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	public static final String userFilename = "data\\users.txt";
+	public static final String logFilename = "data\\logs.txt";
 	
-	static final String userFilename = "data\\users.txt";
-	static final String logFilename = "data\\logs.txt";
+	public static class LogEvent {
+		public LocalDateTime dateTime;
+		public String logText;
+		public LogEvent(LocalDateTime dateTime, String logText) {
+			this.dateTime = dateTime;
+			this.logText = logText;
+		}
+	}
 	
-	static List<User> users = new ArrayList<User>();
+	public static List<User> users = new ArrayList<User>();
+	
+	public static List<LogEvent> logs = new ArrayList<LogEvent>();
 	
 	public static void main(String[] args) {
 		
 		HelperFunctions.LogEvent("system start");
 		
 		LoadUsersFromFile(userFilename);
+		LoadLogsFromFile(logFilename);
 		
-		while (true) {
+		String[] options = { "Login", "Exit" };
+		int choice = 0;
+		do {
 			User user = null;
 			System.out.println("----------MAIN MENU---------");
-			String[] options = { "Login", "Exit" };
-			int choice = HelperFunctions.DisplayMenu(options, null);
-			switch (choice) {
-			case 1:
+			choice = HelperFunctions.DisplayMenu(options, null);
+			if(choice == 1) {
 				user = LoginMenu();
 				HelperFunctions.LogEvent("user login: " + user.username);
-				if(user instanceof Administrator) {
-					AdminMenu((Administrator)user);
-				}else if(user instanceof NullUser) {
-					System.out.println("Sorry, you do not have a defined role");
-					System.out.println("Logging out...");
-					HelperFunctions.LogEvent("user logout: " + user.username);
-					HelperFunctions.Pause();
-				}
-				break;
-			case 2:
-				System.out.println("Goodbye! :)");
-				HelperFunctions.LogEvent("system exit");
-				System.exit(0);
-				break;
+				user.UserMenu();
 			}
-		}
+		} while(choice != 2);
+		
+		System.out.println("Goodbye! :)");
+		HelperFunctions.LogEvent("system exit");
 
+	}
+	
+	private static User LoginMenu() {
+		System.out.println("----------LOGIN----------");
+		
+		int userID;
+		System.out.println("Enter username: ");
+		do {
+			String username = input.next();
+			userID = HelperFunctions.FindUserByUsername(users, username);
+			if(userID == -1) {
+				System.out.println("User does not exist, try again: ");
+			}
+		}while(userID == -1);
+		
+		System.out.println("Enter password: ");
+		while(true) {
+			String password;
+			password = input.next();
+			if(password.equals(users.get(userID).password)){
+				return users.get(userID);
+			}
+			System.out.println("Password does not match, try again: ");
+		}
+		
 	}
 	
 	private static void LoadUsersFromFile(String fileUrl) {
@@ -71,7 +102,16 @@ public class Main {
 		}
 	}
 	
-	private static void WriteUsersToFile(String fileUrl) {
+	private static void LoadLogsFromFile(String fileUrl) {
+		String[] fileLines = FileIO.ReadLines(fileUrl);
+		for(String line : fileLines) {
+			String dateText = line.substring(line.indexOf('[')+1, line.indexOf(']'));
+			String logText = line.substring(line.indexOf(']')+2);
+			logs.add(new LogEvent(LocalDateTime.parse(dateText, formatter), logText));
+		}
+	}
+	
+	public static void WriteUsersToFile(String fileUrl) {
 		List<String> lines = new ArrayList<String>();
 		for(User user : users) {
 			String line = user.username + "," + user.password + "," + user.name + "," + user.lastName + "," + user.type.toString();
@@ -80,68 +120,6 @@ public class Main {
 		if(!FileIO.WriteLines(fileUrl, lines.toArray(new String[lines.size()]))) {
 			System.out.println("Error while writing users to file...");
 		}
-	}
-	
-	private static User LoginMenu() {
-		System.out.println("----------LOGIN----------");
-		while(true) {
-			String username;
-			String password;
-			System.out.println("Enter username: ");
-			usernameCheck: while(true) {
-				username = input.next();
-				for(User user : users) {
-					if(user.username.equals(username)) {
-						break usernameCheck;
-					}
-				}
-				System.out.println("No user with that username, try again: ");
-			}
-			
-			System.out.println("Enter password for " + username + ": ");
-			while (true) {
-				password = input.next();
-				for (User user : users) {
-					if (user.password.equals(password)) {
-						return user;
-					}
-				}
-				System.out.println("Invalid password, try again: ");
-			}
-		}
-	}
-	
-	private static void AdminMenu(Administrator admin) {
-		System.out.println("----------ADMINISTRATOR PANEL----------");
-		String[] options = {"View users in system","Register a new user", "Modify existing user", "Delete existing user", "View Logs", "Log out"};
-		
-		while(true) {
-			int choice = HelperFunctions.DisplayMenu(options, null);
-			switch(choice) {
-			case 1:
-				admin.ListAllUsers(users);
-				break;
-			case 2: 
-				users = admin.RegisterNewUser(users);
-				WriteUsersToFile(userFilename);
-				break;
-			case 3: 
-				users = admin.ModifyUser(users);
-				WriteUsersToFile(userFilename);
-				break;
-			case 4:
-				users = admin.DeleteUser(users);
-				WriteUsersToFile(userFilename);
-				break;
-			case 5:
-				//TODO: Logs
-				break;
-			case 6: 
-				HelperFunctions.LogEvent("user logout: " + admin.username); 
-				return;
-			}
-		}
-		
 	}
 
 }

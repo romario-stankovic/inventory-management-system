@@ -1,4 +1,4 @@
 romario,Romario123,Romario,Stankovic,Administrator
 akoso,Plays,Andrija,Stankovic,Driver
 acipro,pro,Aleksandar,Gengo,Driver
-nenad,nenando,Nenad,Dinic,Administrator
+nenad,nenando,Nenad,Dinic,WarehouseWorker

@@ -7,7 +7,6 @@ public abstract class User {
 	public String lastName;
 	public UserTypes type;
 	
-	
 	public User (String username, String password, String name, String lastName, UserTypes type){
 		this.username = username;
 		this.password = password;
@@ -15,6 +14,8 @@ public abstract class User {
 		this.lastName = lastName;
 		this.type = type;
 	}
+	
+	public void UserMenu() {}
 	
 	public void PrintInfo() {
 		System.out.println("[" + type.toString() + "] " + name + " " + lastName);
