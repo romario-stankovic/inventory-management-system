@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import program.Main;
 import program.HelperFunctions;
+import program.UserFactory;
 
 import program.Data.UserType;
 import program.Data.LogEvent;
@@ -136,21 +137,8 @@ public class Administrator extends User {
 			userType = UserType.Administrator;
 		}
 		//Create user of type
-		User newUser = null;
-		switch (userType) {
-		case Administrator:
-			newUser = new Administrator(username, password, name, lastName, userType);
-			break;
-		case Driver:
-			newUser = new Driver(username, password, name, lastName, userType);
-			break;
-		case Clerk:
-			newUser = new Clerk(username, password, name, lastName, userType);
-			break;
-		case Null:
-			newUser = new NullUser(username, password, name, lastName, userType);
-			break;
-		}
+		User newUser = UserFactory.getUser(username, password, name, lastName, userType);
+		
 		//Add user to list and write to file
 		Main.users.add(newUser);
 		Main.writeUsersToFile();
@@ -251,25 +239,13 @@ public class Administrator extends User {
 				
 				//Ask the admin to choose
 				int typeChoice = HelperFunctions.DisplayMenu(typeOptions, "Select type of user: ");
-				//Modify the user
-				modifyUser.type = UserType.values()[typeChoice - 1];
+				//get type
+				UserType userType = UserType.values()[typeChoice - 1];
 				
 				//When modifying the user type, we need to change the instance of the user
-				switch (modifyUser.type) {
-				case Administrator:
-					modifyUser = new Administrator(modifyUser.username, modifyUser.password, modifyUser.name, modifyUser.lastName, modifyUser.type);
-					break;
-				case Clerk:
-					modifyUser = new Clerk(modifyUser.username, modifyUser.password, modifyUser.name, modifyUser.lastName, modifyUser.type);
-					break;
-				case Driver:
-					modifyUser = new Driver(modifyUser.username, modifyUser.password, modifyUser.name, modifyUser.lastName, modifyUser.type);
-					break;
-				case Null:
-					modifyUser = new NullUser(modifyUser.username, modifyUser.password, modifyUser.name, modifyUser.lastName, modifyUser.type);
-					break;
-				}
 				
+				modifyUser = UserFactory.getUser(modifyUser.username, modifyUser.password, modifyUser.name, modifyUser.lastName, userType);
+				//Set user in main
 				Main.users.set(userID, modifyUser);
 				//Log event
 				Main.LogEvent(username + " changed type of " + modifyUser.username + " to " + UserType.values()[typeChoice - 1]);

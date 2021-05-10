@@ -10,7 +10,6 @@ import users.*;
 
 import program.Data.*;
 
-
 public class Main {
 	//Declare a scanner
 	public static Scanner input = new Scanner(System.in);
@@ -127,22 +126,8 @@ public class Main {
 			String[] fields = user.split(",");
 			//Get user type
 			UserType userType = UserType.valueOf(fields[4]);
-			//based on user type, create object
-			User userObject = null;
-			switch(userType) {
-				case Administrator:
-					userObject = new Administrator(fields[0], fields[1], fields[2], fields[3], userType);
-					break;
-				case Clerk:
-					userObject = new Clerk(fields[0], fields[1], fields[2], fields[3], userType);
-					break;
-				case Driver:
-					userObject = new Driver(fields[0], fields[1], fields[2], fields[3], userType);
-					break;
-				case Null:
-					userObject = new NullUser(fields[0], fields[1], fields[2], fields[3], userType);
-					break;
-			}
+			//based on user type, call userFactory and get the user
+			User userObject = UserFactory.getUser(fields[0], fields[1], fields[2], fields[3], userType);
 			//Add users to list
 			users.add(userObject);
 		}
