@@ -11,7 +11,6 @@ import users.*;
 import program.Data.*;
 
 
-
 public class Main {
 	//Declare a scanner
 	public static Scanner input = new Scanner(System.in);
@@ -36,27 +35,27 @@ public class Main {
 	public static void main(String[] args) {
 
 		//LoadData
-		if(FileIO.FileExists(logFilename)) {
+		if(FileIO.fileExists(logFilename)) {
 			loadLogsFromFile();
 		}else {
-			FileIO.CreateFile(logFilename);
+			FileIO.createFile(logFilename);
 		}
 		
-		if(FileIO.FileExists(userFilename)) {
+		if(FileIO.fileExists(userFilename)) {
 			loadUsersFromFile();
 		}else {
-			FileIO.CreateFile(userFilename);
+			FileIO.createFile(userFilename);
 		}
 		
-		if(FileIO.FileExists(categoryFilename)) {
+		if(FileIO.fileExists(categoryFilename)) {
 			loadCategoriesFromFile();
 		}else {
-			FileIO.CreateFile(categoryFilename);
+			FileIO.createFile(categoryFilename);
 		}
-		if(FileIO.FileExists(itemFilename)) {
+		if(FileIO.fileExists(itemFilename)) {
 			loadItemsFromFile();
 		}else {
-			FileIO.CreateFile(itemFilename);
+			FileIO.createFile(itemFilename);
 		}
 		
 		//If there are no users in the system
@@ -122,7 +121,7 @@ public class Main {
 	
 	private static void loadUsersFromFile() {
 		//Read lines from file
-		String[] filelines = FileIO.ReadLines(userFilename);
+		String[] filelines = FileIO.readLines(userFilename);
 		for(String user : filelines) {
 			//foreach user, split the fileds
 			String[] fields = user.split(",");
@@ -153,7 +152,7 @@ public class Main {
 	
 	private static void loadLogsFromFile() {
 		//Load logs
-		String[] fileLines = FileIO.ReadLines(logFilename);
+		String[] fileLines = FileIO.readLines(logFilename);
 		for(String line : fileLines) {
 			//foreach log, read date and logText
 			String dateText = line.substring(line.indexOf('[')+1, line.indexOf(']'));
@@ -167,7 +166,7 @@ public class Main {
 	
 	private static void loadCategoriesFromFile() {
 		//load categories
-		String[] fileLines = FileIO.ReadLines(categoryFilename);
+		String[] fileLines = FileIO.readLines(categoryFilename);
 		for(String line : fileLines) {
 			//Split info
 			String[] fields = line.split(",");
@@ -183,7 +182,7 @@ public class Main {
 	
 	private static void loadItemsFromFile() {
 		//load items
-		String[] fileLines = FileIO.ReadLines(itemFilename);
+		String[] fileLines = FileIO.readLines(itemFilename);
 		for(String line : fileLines) {
 			//foreach line, split info
 			String[] fields = line.split(",");
@@ -198,7 +197,7 @@ public class Main {
 			String line = user.username + "," + user.password + "," + user.name + "," + user.lastName + "," + user.type.toString();
 			lines.add(line);
 		}
-		if(!FileIO.WriteLines(userFilename, lines.toArray(new String[lines.size()]))) {
+		if(!FileIO.writeLines(userFilename, lines.toArray(new String[lines.size()]))) {
 			System.out.println("Error while writing users to file...");
 		}
 	}
@@ -210,7 +209,7 @@ public class Main {
 			lines.add(line);
 		}
 		
-		if(!FileIO.WriteLines(logFilename, lines.toArray(new String[lines.size()]))) {
+		if(!FileIO.writeLines(logFilename, lines.toArray(new String[lines.size()]))) {
 			System.out.println("Error while writing logs to file...");
 		}
 		
@@ -223,7 +222,7 @@ public class Main {
 			lines.add(line);
 		}
 		
-		if(!FileIO.WriteLines(categoryFilename, lines.toArray(new String[lines.size()]))) {
+		if(!FileIO.writeLines(categoryFilename, lines.toArray(new String[lines.size()]))) {
 			System.out.println("Error while writing categories to file...");
 		}
 	}
@@ -235,7 +234,7 @@ public class Main {
 			lines.add(line);
 		}
 		
-		if(!FileIO.WriteLines(itemFilename, lines.toArray(new String[lines.size()]))) {
+		if(!FileIO.writeLines(itemFilename, lines.toArray(new String[lines.size()]))) {
 			System.out.println("Error while writing items to file...");
 		}
 	}
