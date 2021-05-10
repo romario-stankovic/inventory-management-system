@@ -34,12 +34,13 @@ public class Data {
 		public float massPerUnit;
 		public int numberOfUnits;
 		float totalMass;
-		public int Category;
+		public int category;
 		
-		public Item (String name, float massPerUnit, int numberOfUnits) {
+		public Item (String name, float massPerUnit, int numberOfUnits, int category) {
 			this.name = name;
 			this.massPerUnit = massPerUnit;
 			this.numberOfUnits = numberOfUnits;
+			this.category = category;
 		}
 		
 		public float GetTotalMass() {

@@ -9,14 +9,13 @@ import java.util.List;
 
 public class HelperFunctions {
 	
-	private static Scanner input;
+	private static Scanner input = Main.input;
 	
 	public static int DisplayMenu(String[] menuOptions) {
 		return DisplayMenu(menuOptions, null);
 	}
 	
 	public static int DisplayMenu(String[] menuOptions, String message) {
-		input = Main.input;
 		
 		if(message == null) {
 			message = "Select option: ";

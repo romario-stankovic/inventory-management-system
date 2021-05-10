@@ -198,10 +198,10 @@ public class Administrator extends User {
 						System.out.println("Username already taken, try again: ");
 					}
 				} while (newUserID != -1);
-				//If the username is available, change the username of the user
-				modifyUser.username = newUsername;
 				//Log Event
 				Main.LogEvent(username + " changed username of " + modifyUser.username + " to " + newUsername);
+				//If the username is available, change the username of the user
+				modifyUser.username = newUsername;
 				break;
 			case 2:
 				//If the admin is changing the password, ask them to enter a new one and confirm it
@@ -269,6 +269,8 @@ public class Administrator extends User {
 					modifyUser = new NullUser(modifyUser.username, modifyUser.password, modifyUser.name, modifyUser.lastName, modifyUser.type);
 					break;
 				}
+				
+				Main.users.set(userID, modifyUser);
 				//Log event
 				Main.LogEvent(username + " changed type of " + modifyUser.username + " to " + UserType.values()[typeChoice - 1]);
 

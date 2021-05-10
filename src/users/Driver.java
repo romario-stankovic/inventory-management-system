@@ -90,7 +90,7 @@ public class Driver extends User {
 				//if we found the item, clone it and add it to the inbound queue
 				Item mainItem = Main.items.get(itemID);
 				int quantity = quantityInput();
-				Item cloneItem = new Item(mainItem.name, mainItem.massPerUnit, quantity);
+				Item cloneItem = new Item(mainItem.name, mainItem.massPerUnit, quantity, 0);
 				Main.inboundItems.add(cloneItem);
 				numberOfDeliveredItems += quantity;
 				continue;
@@ -100,7 +100,7 @@ public class Driver extends User {
 			//and add the item to inbound queue
 			float massPerUnit = massInput();
 			int numberOfUnits = quantityInput();
-			item = new Item(itemName, massPerUnit, numberOfUnits);
+			item = new Item(itemName, massPerUnit, numberOfUnits, 0);
 			Main.inboundItems.add(item);
 			numberOfDeliveredItems += numberOfUnits;
 		}

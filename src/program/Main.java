@@ -61,7 +61,7 @@ public class Main {
 		
 		//If there are no users in the system
 		if(users.size() == 0) {
-			Administrator admin = new Administrator("null", "null", "null", "null", UserType.Administrator);
+			Administrator admin = new Administrator("", "", "", "", UserType.Administrator);
 			admin.FirstTimeRegistration();
 		}
 		
@@ -188,7 +188,7 @@ public class Main {
 			//foreach line, split info
 			String[] fields = line.split(",");
 			//add item to list
-			items.add(new Item(fields[0], Float.parseFloat(fields[1]), Integer.parseInt(fields[2])));
+			items.add(new Item(fields[0], Float.parseFloat(fields[1]), Integer.parseInt(fields[2]), Integer.parseInt(fields[3])));
 		}
 	}
 	
@@ -231,7 +231,7 @@ public class Main {
 	public static void writeItemToFile() {
 		List<String> lines = new ArrayList<String>();
 		for(Item item : items) {
-			String line = item.name + "," + item.massPerUnit + "," + item.numberOfUnits + "," + item.Category;
+			String line = item.name + "," + item.massPerUnit + "," + item.numberOfUnits + "," + item.category;
 			lines.add(line);
 		}
 		

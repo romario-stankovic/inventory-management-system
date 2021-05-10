@@ -137,7 +137,7 @@ public class Clerk extends User{
 		do {
 			categoryName = input.next();
 			id = HelperFunctions.FindCategoryByName(Main.categories, categoryName);
-			//chekc if we have the category, if not, display a message
+			//check if we have the category, if not, display a message
 			if(id == 0) {
 				System.out.println("Category does not exist, try again: ");
 			}
@@ -147,6 +147,7 @@ public class Clerk extends User{
 		Main.categories.remove(id-1);
 		//Remove category from items
 		updateItemCategories(id, 0);
+		
 		
 		//Go through each category
 		for(Category category : Main.categories) {
@@ -158,6 +159,8 @@ public class Clerk extends User{
 				updateItemCategories(oldID, category.id);
 			}
 		}
+		
+		
 		//write categories and items to file
 		Main.writeCategoriesToFile();
 		Main.writeItemToFile();
@@ -173,10 +176,19 @@ public class Clerk extends User{
 	
 	private void displayItems() {
 		System.out.println("----------DISPLAY ITEMS----------");
+		
+		//Check if we have any items
+		if(Main.items.size() == 0) {
+			//If there are no items, display a message
+			System.out.println("There are no items to display");
+			HelperFunctions.Pause();
+		}
+		
 		for(Item item : Main.items) {
 			item.CalculateTotalMass();
-			System.out.println(item.name + "," + item.massPerUnit + "," + item.numberOfUnits + "," + item.GetTotalMass());
+			System.out.println(item.name + "," + item.massPerUnit + "," + item.numberOfUnits + "," + item.GetTotalMass() + "," + Main.categories.get(item.category-1).toString());
 		}
+		HelperFunctions.Pause();
 	}
 	
 	private void categorizeItems() {
@@ -210,12 +222,12 @@ public class Clerk extends User{
 		
 		//Go through each item
 		for(Item item : Main.items) {
-			if(item.Category != 0) {
+			if(item.category != 0) {
 				//If item has a category, skip it
 				continue;
 			}
 			int choice = HelperFunctions.DisplayMenu(options, "Select category for: " + item.name);
-			item.Category = choice;
+			item.category = choice;
 			numberOfItems++;
 		}
 		
@@ -231,17 +243,17 @@ public class Clerk extends User{
 	
 	private void queueItemsForShipment() {
 		
-		//Check if we have any items
-		if(Main.items.size() == 0) {
-			//If we don't have items, display a message
-			System.out.println("There are no items in invetory");
-			HelperFunctions.Pause();
-			return;
-		}
 		
 		int numberOfItems = 0;
 		
 		while(true) {
+			//Check if we have any items
+			if(Main.items.size() == 0) {
+				//If we don't have items, display a message
+				System.out.println("There are no items in invetory");
+				HelperFunctions.Pause();
+				return;
+			}
 			//Display a message to the clerk
 			System.out.println("Enter item name: (enter \"stop\" to finish)");
 			//Get input
@@ -259,7 +271,7 @@ public class Clerk extends User{
 			if(item != null) {
 				//Ask the clerk to enter the quantity of items
 				System.out.println("Enter quantity: ");
-				int quantity;
+				int quantity = 0;
 				
 				//Check if quantity is a valid input and in range
 				do {
@@ -275,18 +287,23 @@ public class Clerk extends User{
 						System.out.println("quantity out or range, try again: ");
 						continue;
 					}
-				} while (quantity == -1);
+				} while (quantity == -1 || quantity > item.numberOfUnits || quantity <= 0);
 				
 				//Reduce the item
 				item.numberOfUnits -= quantity;
 				//Create a copy of the item, but with quantity we chose
-				Item queueItem = new Item(item.name, item.massPerUnit, quantity);
 				//If we don't have this item in the system anymore, remove it
 				if(item.numberOfUnits == 0) {
 					Main.items.remove(item);
 				}
-				//Add the item to the queeu
-				Main.outboundItems.add(queueItem);
+				//Add the item to the queue
+				int outboundIndex = HelperFunctions.FindItemByName(Main.outboundItems, item.name);
+				if(outboundIndex == -1) {
+					Item queueItem = new Item(item.name, item.massPerUnit, quantity, item.category);
+					Main.outboundItems.add(queueItem);
+				}else {
+					Main.outboundItems.get(outboundIndex).numberOfUnits += quantity;
+				}
 				
 				//Count how many items we removed
 				numberOfItems += quantity;
@@ -298,7 +315,7 @@ public class Clerk extends User{
 		//Log Event
 		Main.LogEvent(username + " queued " + numberOfItems + " items for shipment");
 		//Display a message
-		System.out.println("Successfully queued items for shipment");
+		System.out.println("Successfully queued " + numberOfItems + " items for shipment");
 		HelperFunctions.Pause();
 	}
 	
@@ -362,8 +379,8 @@ public class Clerk extends User{
 		//Go through each item
 		for(Item item : Main.items) {
 			//if item category matches oldCategory, set item category to newCategory
-			if(item.Category == oldCategory) {
-				item.Category = newCategory;
+			if(item.category == oldCategory) {
+				item.category = newCategory;
 			}
 		}
 	}
