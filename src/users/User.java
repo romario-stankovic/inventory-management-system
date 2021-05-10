@@ -1,24 +1,20 @@
 package users;
 
-public abstract class User {
+import program.Data.UserType;
+
+public abstract class User implements UserActions{
 	public String username;
 	public String password;
 	public String name;
 	public String lastName;
-	public UserTypes type;
+	public UserType type;
 	
-	public User (String username, String password, String name, String lastName, UserTypes type){
+	public User (String username, String password, String name, String lastName, UserType type) {
 		this.username = username;
 		this.password = password;
 		this.name = name;
 		this.lastName = lastName;
 		this.type = type;
 	}
-	
-	public void UserMenu() {}
-	
-	public void PrintInfo() {
-		System.out.println("[" + type.toString() + "] " + name + " " + lastName);
-	}
-	
+		
 }

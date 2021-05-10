@@ -1,63 +1,103 @@
 package program;
 
-import users.*;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import users.*;
+
+import program.Data.*;
+
+
 
 public class Main {
-	
+	//Declare a scanner
 	public static Scanner input = new Scanner(System.in);
+	//Declare a DateTimeFormatter
 	public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	//Create final fields that lead to file locations
 	public static final String userFilename = "data\\users.txt";
 	public static final String logFilename = "data\\logs.txt";
-	
-	public static class LogEvent {
-		public LocalDateTime dateTime;
-		public String logText;
-		public LogEvent(LocalDateTime dateTime, String logText) {
-			this.dateTime = dateTime;
-			this.logText = logText;
-		}
-	}
-	
+	public static final String itemFilename = "data\\items.txt";
+	public static final String categoryFilename = "data\\categories.txt";
+
+	//List of items
+	public static List<LogEvent> logs = new ArrayList<LogEvent>();
 	public static List<User> users = new ArrayList<User>();
 	
-	public static List<LogEvent> logs = new ArrayList<LogEvent>();
+	public static List<Category> categories = new ArrayList<Category>();
+	
+	public static List<Item> items = new ArrayList<Item>();
+	public static List<Item> inboundItems = new ArrayList<Item>();
+	public static List<Item> outboundItems = new ArrayList<Item>();
 	
 	public static void main(String[] args) {
+
+		//LoadData
+		if(FileIO.FileExists(logFilename)) {
+			loadLogsFromFile();
+		}else {
+			FileIO.CreateFile(logFilename);
+		}
 		
-		HelperFunctions.LogEvent("system start");
+		if(FileIO.FileExists(userFilename)) {
+			loadUsersFromFile();
+		}else {
+			FileIO.CreateFile(userFilename);
+		}
 		
-		LoadUsersFromFile(userFilename);
-		LoadLogsFromFile(logFilename);
+		if(FileIO.FileExists(categoryFilename)) {
+			loadCategoriesFromFile();
+		}else {
+			FileIO.CreateFile(categoryFilename);
+		}
+		if(FileIO.FileExists(itemFilename)) {
+			loadItemsFromFile();
+		}else {
+			FileIO.CreateFile(itemFilename);
+		}
 		
+		//If there are no users in the system
+		if(users.size() == 0) {
+			Administrator admin = new Administrator("null", "null", "null", "null", UserType.Administrator);
+			admin.FirstTimeRegistration();
+		}
+		
+		//Log Event
+		LogEvent("system ready");
+		
+		//Display options
 		String[] options = { "Login", "Exit" };
 		int choice = 0;
+		//Display menu and try to get user
 		do {
 			User user = null;
 			System.out.println("----------MAIN MENU---------");
-			choice = HelperFunctions.DisplayMenu(options, null);
+			choice = HelperFunctions.DisplayMenu(options);
 			if(choice == 1) {
-				user = LoginMenu();
-				HelperFunctions.LogEvent("user login: " + user.username);
-				user.UserMenu();
+				user = loginMenu();
+				//If the user is not null, log him in
+				if(user != null) {
+					user.userMenu();
+				}
 			}
-		} while(choice != 2);
+		}while(choice != 2);
 		
+		//If the user exits the menu, display a message
 		System.out.println("Goodbye! :)");
-		HelperFunctions.LogEvent("system exit");
+		//Log event
+		LogEvent("system stopped");
 
 	}
 	
-	private static User LoginMenu() {
+	private static User loginMenu() {
 		System.out.println("----------LOGIN----------");
 		
 		int userID;
 		System.out.println("Enter username: ");
+		//Ask the user to enter a username
 		do {
 			String username = input.next();
 			userID = HelperFunctions.FindUserByUsername(users, username);
@@ -65,31 +105,37 @@ public class Main {
 				System.out.println("User does not exist, try again: ");
 			}
 		}while(userID == -1);
-		
+		//If we entered a correct username, ask the user to enter a password
 		System.out.println("Enter password: ");
 		while(true) {
 			String password;
 			password = input.next();
+			//If password matches, return the user
 			if(password.equals(users.get(userID).password)){
 				return users.get(userID);
 			}
+			//if it does not match, display a message
 			System.out.println("Password does not match, try again: ");
 		}
 		
 	}
 	
-	private static void LoadUsersFromFile(String fileUrl) {
-		String[] filelines = FileIO.ReadLines(fileUrl);
+	private static void loadUsersFromFile() {
+		//Read lines from file
+		String[] filelines = FileIO.ReadLines(userFilename);
 		for(String user : filelines) {
+			//foreach user, split the fileds
 			String[] fields = user.split(",");
-			UserTypes userType = UserTypes.valueOf(fields[4]);
+			//Get user type
+			UserType userType = UserType.valueOf(fields[4]);
+			//based on user type, create object
 			User userObject = null;
 			switch(userType) {
 				case Administrator:
 					userObject = new Administrator(fields[0], fields[1], fields[2], fields[3], userType);
 					break;
-				case WarehouseWorker:
-					userObject = new WarehouseWorker(fields[0], fields[1], fields[2], fields[3], userType);
+				case Clerk:
+					userObject = new Clerk(fields[0], fields[1], fields[2], fields[3], userType);
 					break;
 				case Driver:
 					userObject = new Driver(fields[0], fields[1], fields[2], fields[3], userType);
@@ -98,28 +144,105 @@ public class Main {
 					userObject = new NullUser(fields[0], fields[1], fields[2], fields[3], userType);
 					break;
 			}
+			//Add users to list
 			users.add(userObject);
 		}
+		//Log Event
+		Main.LogEvent("loaded " + users.size() +" users");
 	}
 	
-	private static void LoadLogsFromFile(String fileUrl) {
-		String[] fileLines = FileIO.ReadLines(fileUrl);
+	private static void loadLogsFromFile() {
+		//Load logs
+		String[] fileLines = FileIO.ReadLines(logFilename);
 		for(String line : fileLines) {
+			//foreach log, read date and logText
 			String dateText = line.substring(line.indexOf('[')+1, line.indexOf(']'));
 			String logText = line.substring(line.indexOf(']')+2);
+			//add logs to list
 			logs.add(new LogEvent(LocalDateTime.parse(dateText, formatter), logText));
+		}
+		//Log Event
+		Main.LogEvent("loaded " + logs.size() +" logs");
+	}
+	
+	private static void loadCategoriesFromFile() {
+		//load categories
+		String[] fileLines = FileIO.ReadLines(categoryFilename);
+		for(String line : fileLines) {
+			//Split info
+			String[] fields = line.split(",");
+			int id;
+			//get category id
+			id = Integer.parseInt(fields[0]);
+			//Add category to list
+			categories.add(new Category(id, fields[1]));
+		}
+		//Log Event
+		Main.LogEvent("loaded " + categories.size() +" categories");
+	}
+	
+	private static void loadItemsFromFile() {
+		//load items
+		String[] fileLines = FileIO.ReadLines(itemFilename);
+		for(String line : fileLines) {
+			//foreach line, split info
+			String[] fields = line.split(",");
+			//add item to list
+			items.add(new Item(fields[0], Float.parseFloat(fields[1]), Integer.parseInt(fields[2])));
 		}
 	}
 	
-	public static void WriteUsersToFile(String fileUrl) {
+	public static void writeUsersToFile() {
 		List<String> lines = new ArrayList<String>();
 		for(User user : users) {
 			String line = user.username + "," + user.password + "," + user.name + "," + user.lastName + "," + user.type.toString();
 			lines.add(line);
 		}
-		if(!FileIO.WriteLines(fileUrl, lines.toArray(new String[lines.size()]))) {
+		if(!FileIO.WriteLines(userFilename, lines.toArray(new String[lines.size()]))) {
 			System.out.println("Error while writing users to file...");
 		}
 	}
+	
+	public static void writeLogToFile() {
+		List<String> lines = new ArrayList<String>();
+		for(LogEvent log : logs) {
+			String line = "["+log.dateTime.format(formatter)+"] " + log.logText;
+			lines.add(line);
+		}
+		
+		if(!FileIO.WriteLines(logFilename, lines.toArray(new String[lines.size()]))) {
+			System.out.println("Error while writing logs to file...");
+		}
+		
+	}
+	
+	public static void writeCategoriesToFile() {
+		List<String> lines = new ArrayList<String>();
+		for(Category category : categories) {
+			String line = category.id + "," + category.name;
+			lines.add(line);
+		}
+		
+		if(!FileIO.WriteLines(categoryFilename, lines.toArray(new String[lines.size()]))) {
+			System.out.println("Error while writing categories to file...");
+		}
+	}
 
+	public static void writeItemToFile() {
+		List<String> lines = new ArrayList<String>();
+		for(Item item : items) {
+			String line = item.name + "," + item.massPerUnit + "," + item.numberOfUnits + "," + item.Category;
+			lines.add(line);
+		}
+		
+		if(!FileIO.WriteLines(itemFilename, lines.toArray(new String[lines.size()]))) {
+			System.out.println("Error while writing items to file...");
+		}
+	}
+	
+	public static void LogEvent(String eventText) {
+		logs.add(new LogEvent(LocalDateTime.now(), eventText));
+		writeLogToFile();
+	}
+	
 }

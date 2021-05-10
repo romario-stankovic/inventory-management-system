@@ -6,6 +6,7 @@ import java.util.*;
 public class FileIO {
 
 	public static boolean WriteLines(String fileName, String[] lines) {
+		//Try to write each string to file
 		try {
 			File file = new File(fileName);
 			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
@@ -21,6 +22,7 @@ public class FileIO {
 	}
 
 	public static boolean AppendLine(String fileName, String line) {
+		//Try to append to file
 		try {
 			File file = new File(fileName);
 			BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
@@ -34,6 +36,7 @@ public class FileIO {
 	}
 
 	public static String[] ReadLines(String fileName) {
+		//Read lines from file
 		List<String> lines = new ArrayList<String>();
 		try {
 			File file = new File(fileName);
@@ -47,6 +50,18 @@ public class FileIO {
 		} catch (Exception e) {
 			return new String[0];
 		}
+	}
+	
+	public static boolean FileExists(String fileName) {
+		File file = new File(fileName);
+		return file.exists();
+	}
+	
+	public static void CreateFile(String fileName) {
+		File file = new File(fileName);
+		try {
+			file.createNewFile();
+		}catch(Exception e) {}
 	}
 
 }

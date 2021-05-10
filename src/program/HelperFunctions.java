@@ -1,30 +1,28 @@
 package program;
 
-import java.time.LocalDateTime;
-import java.util.Scanner;
-import java.util.List;
-
 import users.*;
+import java.util.Scanner;
+
+import program.Data.*;
+
+import java.util.List;
 
 public class HelperFunctions {
 	
 	private static Scanner input;
 	
-	public static void LogEvent(String eventText) {
-		LocalDateTime dateTime = LocalDateTime.now();
-		String now = "[" + dateTime.format(Main.formatter) + "] ";
-		Main.logs.add(new Main.LogEvent(dateTime, eventText));
-		FileIO.AppendLine(Main.logFilename, now + eventText);
+	public static int DisplayMenu(String[] menuOptions) {
+		return DisplayMenu(menuOptions, null);
 	}
 	
-	public static int DisplayMenu(String[] menuOptions, String customMessage) {
+	public static int DisplayMenu(String[] menuOptions, String message) {
 		input = Main.input;
 		
-		if(customMessage != null) {
-			System.out.println(customMessage);
-		}else {
-			System.out.println("Select option: ");
+		if(message == null) {
+			message = "Select option: ";
 		}
+		
+		System.out.println(message);
 		
 		for(int i=1; i<=menuOptions.length; i++) {
 			System.out.println(i + ") " + menuOptions[i-1]);
@@ -55,6 +53,24 @@ public class HelperFunctions {
 		return -1;
 	}
 	
+	public static int FindCategoryByName(List<Category> categories, String categoryName) {
+		for(int i=0; i<categories.size(); i++) {
+			if(categories.get(i).name.equals(categoryName)) {
+				return categories.get(i).id;
+			}
+		}
+		return 0;
+	}
+	
+	public static int FindItemByName(List<Item> items, String itemName) {
+		for(int i=0; i<items.size(); i++) {
+			if(items.get(i).name.equals(itemName)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
 	public static void Pause() {
 		input.nextLine();
 		System.out.print("Press ENTER to continue...");
@@ -62,6 +78,6 @@ public class HelperFunctions {
 	}
 	
 	public static void ClearScreen() {
-		
+
 	}
 }
