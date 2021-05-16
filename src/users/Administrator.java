@@ -70,7 +70,7 @@ public class Administrator extends User {
 		System.out.println("----------LIST ALL USERS----------");
 		//Go through each user and display data
 		for (User user : Main.users) {
-			System.out.println(user.username + "," + user.name + "," + user.lastName + "," + user.type);
+			System.out.println(user.toString());
 		}
 		System.out.println("");
 		HelperFunctions.Pause();
@@ -92,6 +92,9 @@ public class Administrator extends User {
 		int userID = -1;
 		do {
 			username = input.next();
+			if(username.equals("cancel")) {
+				return;
+			}
 			userID = HelperFunctions.FindUserByUsername(Main.users, username);
 			if (userID != -1) {
 				System.out.println("Username already taken, please try again: ");
@@ -102,11 +105,16 @@ public class Administrator extends User {
 		
 		System.out.println("Enter password: ");
 		String password = input.next();
-
+		if(password.equals("cancel")) {
+			return;
+		}
 		System.out.println("Repeat password: ");
 		String passwordVerification;
 		do {
 			passwordVerification = input.next();
+			if(passwordVerification.equals("cancel")) {
+				return;
+			}
 			//Check if the password matches
 			if (!password.equals(passwordVerification)) {
 				//If it doesn't, ask the admin to try again
@@ -116,23 +124,47 @@ public class Administrator extends User {
 
 		//Ask the admin to enter users name and last name
 		System.out.println("Enter user's name: ");
-		String name = input.next();
-		System.out.println("Enter user's last name: ");
-		String lastName = input.next();
-
+		String name;
+		do {
+			name = input.next();
+			if(name.equals("cancel")) {
+				return;
+			}
+			if(!name.matches("[A-Z][a-z]+")) {
+				System.out.println("Name must start with a capital letter, try again: ");
+			}
+		}while(!name.matches("[A-Z][a-z]+"));
 		
+		System.out.println("Enter user's last name: ");
+		String lastName;
+		do {
+			lastName = input.next();
+			if (lastName.equals("cancel")) {
+				return;
+			}
+			if(!lastName.matches("[A-Z][a-z]+")) {
+				System.out.println("Last name must start with a capital letter, try again: ");
+			}
+		} while (!lastName.matches("[A-Z][a-z]+"));
 		UserType userType;
 		if(firstTime == false) {
 			//Create a list from user types
-			String[] options = new String[UserType.values().length];
+			String[] options = new String[UserType.values().length+1];
 
-			for (int i = 0; i < UserType.values().length; i++) {
-				options[i] = UserType.values()[i].toString();
+			for (int i = 0; i <= UserType.values().length; i++) {
+				if(i < UserType.values().length) {
+					options[i] = UserType.values()[i].toString();
+				}else if(i == UserType.values().length) {
+					options[i] = "Cancel Registration";
+				}
 			}
 			//Ask the admin to select type of user he is creating
 			int choice = HelperFunctions.DisplayMenu(options, "Select type of user: ");
-
-			userType = UserType.values()[choice - 1];
+			if(choice != options.length) {
+				userType = UserType.values()[choice - 1];
+			}else {
+				return;
+			}
 		}else {
 			userType = UserType.Administrator;
 		}
@@ -159,6 +191,9 @@ public class Administrator extends User {
 		//Check if we have the user in the system
 		do {
 			String username = input.next();
+			if(username.equals("cancel")) {
+				return;
+			}
 			userID = HelperFunctions.FindUserByUsername(Main.users, username);
 			if (userID == -1) {
 				//if we don't, ask the admin to try again
@@ -173,7 +208,7 @@ public class Administrator extends User {
 		int choice;
 		do {
 			choice = HelperFunctions.DisplayMenu(options, "Select field to modify: ");
-			switch (choice) {
+			submenu: switch (choice) {
 			case 1:
 				//if the admin choose the username, check availability
 				System.out.println("Enter new username: ");
@@ -181,6 +216,9 @@ public class Administrator extends User {
 				int newUserID;
 				do {
 					newUsername = input.next();
+					if(newUsername.equals("cancel")) {
+						break submenu;
+					}
 					newUserID = HelperFunctions.FindUserByUsername(Main.users, newUsername);
 					if (newUserID != -1) {
 						System.out.println("Username already taken, try again: ");
@@ -195,11 +233,17 @@ public class Administrator extends User {
 				//If the admin is changing the password, ask them to enter a new one and confirm it
 				System.out.println("Enter new password");
 				String newPassword = input.next();
+				if(newPassword.equals("cancel")) {
+					break submenu;
+				}
 				System.out.println("Confirm password");
 				String confirmPassword;
 				//Check if password matches
 				do {
 					confirmPassword = input.next();
+					if(confirmPassword.equals("cancel")) {
+						break submenu;
+					}
 					if (!newPassword.equals(confirmPassword)) {
 						System.out.println("Passwords do not match, try again: ");
 					}
@@ -213,33 +257,62 @@ public class Administrator extends User {
 			case 3:
 				//If the admin is modifying the name, ask them to enter a new one
 				System.out.println("Enter new name: ");
-				String newName = input.next();
+				
+				String newName;
+				
+				do {
+					newName = input.next();
+					if(newName.equals("cancel")) {
+						break submenu;
+					}
+					if(!newName.matches("[A-Z][a-z]+")) {
+						System.out.println("Name must start with a capital letter, try again: ");
+					}
+				}while(!newName.matches("[A-Z][a-z]+"));
+				
 				//Modify user
 				modifyUser.name = newName;
 				//Log Event
-				Main.LogEvent(username + " changed name of " + modifyUser.username + " to " + newName);
+				Main.LogEvent(this.username + " changed name of " + modifyUser.username + " to " + newName);
 
 				break;
 			case 4:
 				//If admin modifies the last name, allow them to enter a new one
 				System.out.println("Enter new last name: ");
-				String newLastName = input.next();
+				String newLastName;
+				do {
+					newLastName = input.next();
+					if(newLastName.equals("cancel")) {
+						break submenu;
+					}
+					if(!newLastName.matches("[A-Z][a-z]+")) {
+						System.out.println("Last name must start with a capital letter, try again: ");
+					}
+				}while(!newLastName.matches("[A-Z][a-z]+"));
+				
 				//Modify user
 				modifyUser.lastName = newLastName;
 				//Log Event
-				Main.LogEvent(username + " changed last name of " + modifyUser.username + " to " + newLastName);
+				Main.LogEvent(this.username + " changed last name of " + modifyUser.username + " to " + newLastName);
 				break;
 			case 5:
 				//if the admin is modifying userType
 				//Create a list of options
-				String[] typeOptions = new String[UserType.values().length];
-				for (int i = 0; i < UserType.values().length; i++) {
-					typeOptions[i] = UserType.values()[i].toString();
+				String[] typeOptions = new String[UserType.values().length+1];
+				for (int i = 0; i <= UserType.values().length; i++) {
+					if(i < UserType.values().length) {
+						typeOptions[i] = UserType.values()[i].toString();
+					}else {
+						typeOptions[i] = "Cancel Modification";
+					}
 				}
 				
 				//Ask the admin to choose
 				int typeChoice = HelperFunctions.DisplayMenu(typeOptions, "Select type of user: ");
 				//get type
+				if(typeChoice == typeOptions.length) {
+					break submenu;
+				}
 				UserType userType = UserType.values()[typeChoice - 1];
 				
 				//When modifying the user type, we need to change the instance of the user
@@ -271,6 +344,9 @@ public class Administrator extends User {
 		//Try and find a user with that username
 		do {
 			username = input.next();
+			if(username.equals("cancel")) {
+				return;
+			}
 			userID = HelperFunctions.FindUserByUsername(Main.users, username);
 			if (userID == -1) {
 				System.out.println("There is no user with that username, try again: ");
@@ -301,7 +377,7 @@ public class Administrator extends User {
 				//If admin choose to view logs from today, find every log with same year and day of year
 				for (LogEvent event : Main.logs) {
 					if (event.dateTime.getYear() == LocalDateTime.now().getYear() && event.dateTime.getDayOfYear() == LocalDateTime.now().getDayOfYear()) {
-						System.out.println(event.dateTime.format(Main.formatter) + " | " + event.logText);
+						System.out.println(event.toString());
 					}
 				}
 				HelperFunctions.Pause();
@@ -310,7 +386,7 @@ public class Administrator extends User {
 				//If admin choose to display logs from yesterday, find the date before today and display logs
 				for (LogEvent event : Main.logs) {
 					if (event.dateTime.getYear() == LocalDateTime.now().minusDays(1).getYear() && event.dateTime.getDayOfYear() == LocalDateTime.now().minusDays(1).getDayOfYear()) {
-						System.out.println(event.dateTime.format(Main.formatter) + " | " + event.logText);
+						System.out.println(event.toString());
 					}
 				}
 				HelperFunctions.Pause();
@@ -321,7 +397,7 @@ public class Administrator extends User {
 				for (LogEvent event : Main.logs) {
 					if (event.dateTime.isBefore(LocalDateTime.now().plusDays(1).withHour(0).withMinute(0).withSecond(0))) {
 						if (event.dateTime.isAfter(LocalDateTime.now().minusDays(8).withHour(23).withMinute(59).withSecond(59))) {
-							System.out.println(event.dateTime.format(Main.formatter) + " | " + event.logText);
+							System.out.println(event.toString());
 						}
 					}
 				}
@@ -333,7 +409,7 @@ public class Administrator extends User {
 				for (LogEvent event : Main.logs) {
 					if (event.dateTime.isBefore(LocalDateTime.now().plusDays(1).withHour(0).withMinute(0).withSecond(0))) {
 						if (event.dateTime.isAfter(LocalDateTime.now().minusMonths(1).minusDays(1).withHour(23).withMinute(59).withSecond(59))) {
-							System.out.println(event.dateTime.format(Main.formatter) + " | " + event.logText);
+							System.out.println(event.toString());
 						}
 					}
 				}
@@ -373,7 +449,7 @@ public class Administrator extends User {
 				for (LogEvent event : Main.logs) {
 					if (event.dateTime.isBefore(edt)) {
 						if (event.dateTime.isAfter(sdt)) {
-							System.out.println(event.dateTime.format(Main.formatter) + " | " + event.logText);
+							System.out.println(event.toString());
 						}
 					}
 				}

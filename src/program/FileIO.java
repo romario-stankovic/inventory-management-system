@@ -52,16 +52,30 @@ public class FileIO {
 		}
 	}
 	
+	public static boolean dirExists(String dirName) {
+		//Check if directory exists
+		File file = new File(dirName);
+		return file.isDirectory();
+	}
+	
 	public static boolean fileExists(String fileName) {
+		//Check if file exists
 		File file = new File(fileName);
 		return file.exists();
 	}
 	
 	public static void createFile(String fileName) {
+		//create a file
 		File file = new File(fileName);
 		try {
 			file.createNewFile();
 		}catch(Exception e) {}
+	}
+	
+	public static void createDir(String dirName) {
+		//create a directory
+		File file = new File(dirName);
+		file.mkdir();
 	}
 
 }

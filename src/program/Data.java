@@ -18,6 +18,12 @@ public class Data {
 			this.dateTime = dateTime;
 			this.logText = logText;
 		}
+		
+		@Override
+		public String toString() {
+			return dateTime.format(Main.formatter) + " | " + logText;
+		}
+		
 	}
 	
 	public static class Category {
@@ -27,9 +33,15 @@ public class Data {
 			this.id = id;
 			this.name = name;
 		}
+		
+		@Override
+		public String toString() {
+			return id + ": " + name;
+		}
+		
 	}
 	
-	public static class Item {
+	public static class Item implements Comparable<Item> {
 		public String name;
 		public float massPerUnit;
 		public int numberOfUnits;
@@ -49,6 +61,16 @@ public class Data {
 		
 		public void CalculateTotalMass() {
 			totalMass = numberOfUnits * massPerUnit;
+		}
+
+		@Override
+		public int compareTo(Item item) {
+			return -item.name.compareTo(this.name);
+		}
+		
+		@Override
+		public String toString() {
+			return numberOfUnits + "x " + name + " (Weight per unit: " + massPerUnit + ", Total weight: " + totalMass + ")";
 		}
 		
 	}

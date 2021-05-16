@@ -1,0 +1,224 @@
+[2021-05-12 10:58:31] loaded 0 logs
+[2021-05-12 10:58:31] loaded 0 users
+[2021-05-12 10:58:31] loaded 0 categories
+[2021-05-12 10:58:41]  registered romario to the system
+[2021-05-12 10:58:42] system ready
+[2021-05-12 10:58:47] admin login: romario
+[2021-05-12 10:59:04] romario registered nenad to the system
+[2021-05-12 10:59:16] romario registered akoso to the system
+[2021-05-12 10:59:19] admin logout: romario
+[2021-05-12 10:59:22] driver login: akoso
+[2021-05-12 11:00:16] akoso delivered: 51 items
+[2021-05-12 11:00:18] driver logout: akoso
+[2021-05-12 11:00:21] clerk login: nenad
+[2021-05-12 11:00:27] nenad took delivery of: 51 items
+[2021-05-12 11:01:22] loaded 14 logs
+[2021-05-12 11:01:22] loaded 3 users
+[2021-05-12 11:01:22] loaded 0 categories
+[2021-05-12 11:01:22] system ready
+[2021-05-12 11:01:26] clerk login: nenad
+[2021-05-12 11:02:58] loaded 19 logs
+[2021-05-12 11:02:58] loaded 3 users
+[2021-05-12 11:02:58] loaded 0 categories
+[2021-05-12 11:02:58] system ready
+[2021-05-12 11:03:05] loaded 23 logs
+[2021-05-12 11:03:05] loaded 3 users
+[2021-05-12 11:03:05] loaded 0 categories
+[2021-05-12 11:03:05] system ready
+[2021-05-12 11:03:08] clerk login: nenad
+[2021-05-12 11:03:53] loaded 28 logs
+[2021-05-12 11:03:53] loaded 3 users
+[2021-05-12 11:03:53] loaded 0 categories
+[2021-05-12 11:03:53] system ready
+[2021-05-12 11:03:57] clerk login: nenad
+[2021-05-12 11:04:15] loaded 33 logs
+[2021-05-12 11:04:15] loaded 3 users
+[2021-05-12 11:04:15] loaded 0 categories
+[2021-05-12 11:04:15] system ready
+[2021-05-12 11:04:22] clerk login: nenad
+[2021-05-12 11:04:27] clerk logout: nenad
+[2021-05-12 11:04:28] system stopped
+[2021-05-12 11:05:11] loaded 40 logs
+[2021-05-12 11:05:11] loaded 3 users
+[2021-05-12 11:05:11] loaded 0 categories
+[2021-05-12 11:05:11] system ready
+[2021-05-12 11:05:14] clerk login: nenad
+[2021-05-12 11:05:21] nenad created category: Food
+[2021-05-12 11:05:30] nenad created category: Tech
+[2021-05-12 11:05:34] nenad created category: Other
+[2021-05-12 11:05:44] nenad categorized 4 items
+[2021-05-12 11:06:31] loaded 49 logs
+[2021-05-12 11:06:31] loaded 3 users
+[2021-05-12 11:06:31] loaded 3 categories
+[2021-05-12 11:06:31] system ready
+[2021-05-12 11:06:35] clerk login: nenad
+[2021-05-12 11:06:55] loaded 54 logs
+[2021-05-12 11:06:55] loaded 3 users
+[2021-05-12 11:06:55] loaded 3 categories
+[2021-05-12 11:06:55] system ready
+[2021-05-12 11:06:58] clerk login: nenad
+[2021-05-12 11:07:05] nenad removed category: Food
+[2021-05-12 11:07:13] nenad removed category: Tech
+[2021-05-12 11:07:21] nenad removed category: Other
+[2021-05-12 22:56:35] loaded 62 logs
+[2021-05-12 22:56:35] loaded 3 users
+[2021-05-12 22:56:35] loaded 0 categories
+[2021-05-12 22:56:35] system ready
+[2021-05-12 22:59:15] loaded 66 logs
+[2021-05-12 22:59:15] loaded 3 users
+[2021-05-12 22:59:15] loaded 0 categories
+[2021-05-12 22:59:15] system ready
+[2021-05-12 22:59:49] loaded 70 logs
+[2021-05-12 22:59:49] loaded 3 users
+[2021-05-12 22:59:49] loaded 0 categories
+[2021-05-12 22:59:49] system ready
+[2021-05-12 23:13:44] loaded 74 logs
+[2021-05-12 23:13:44] loaded 3 users
+[2021-05-12 23:13:44] loaded 0 categories
+[2021-05-12 23:13:44] system ready
+[2021-05-12 23:13:51] driver login: akoso
+[2021-05-12 23:14:01] akoso delivered: 25 items
+[2021-05-12 23:14:05] driver logout: akoso
+[2021-05-12 23:14:08] clerk login: nenad
+[2021-05-12 23:14:18] nenad took delivery of: 25 items
+[2021-05-12 23:14:24] nenad queued 0 items for shipment
+[2021-05-12 23:15:57] nenad created category: category1
+[2021-05-12 23:16:01] nenad created category: category2
+[2021-05-12 23:16:04] nenad created category: category3
+[2021-05-12 23:17:16] nenad removed category: category1
+[2021-05-12 23:17:27] nenad removed category: category2
+[2021-05-12 23:17:30] nenad removed category: category3
+[2021-05-12 23:17:45] nenad created category: c1
+[2021-05-12 23:17:50] nenad removed category: c1
+[2021-05-12 23:17:56] nenad created category: c1
+[2021-05-12 23:18:10] nenad queued 0 items for shipment
+[2021-05-12 23:18:21] nenad queued 10 items for shipment
+[2021-05-12 23:18:25] nenad removed category: c1
+[2021-05-12 23:18:27] clerk logout: nenad
+[2021-05-12 23:18:36] driver login: akoso
+[2021-05-12 23:18:42] akoso took shipment of: 10 items from the queue
+[2021-05-12 23:18:46] akoso delivered: 0 items
+[2021-05-12 23:19:20] driver logout: akoso
+[2021-05-12 23:19:24] admin login: romario
+[2021-05-12 23:20:14] admin logout: romario
+[2021-05-12 23:20:14] system stopped
+[2021-05-12 23:28:34] loaded 104 logs
+[2021-05-12 23:28:34] loaded 3 users
+[2021-05-12 23:28:34] loaded 0 categories
+[2021-05-12 23:28:34] system ready
+[2021-05-12 23:28:42] clerk login: nenad
+[2021-05-12 23:28:48] nenad created category: c1
+[2021-05-12 23:29:04] nenad queued 0 items for shipment
+[2021-05-12 23:29:14] nenad queued 1 items for shipment
+[2021-05-12 23:33:46] nenad queued 0 items for shipment
+[2021-05-12 23:33:48] clerk logout: nenad
+[2021-05-12 23:33:51] driver login: akoso
+[2021-05-12 23:33:53] akoso delivered: 0 items
+[2021-05-12 23:34:02] akoso took shipment of: 1 items from the queue
+[2021-05-12 23:34:04] driver logout: akoso
+[2021-05-12 23:34:10] admin login: romario
+[2021-05-12 23:36:12] loaded 119 logs
+[2021-05-12 23:36:12] loaded 3 users
+[2021-05-12 23:36:12] loaded 1 categories
+[2021-05-12 23:36:12] system ready
+[2021-05-12 23:36:15] admin login: romario
+[2021-05-12 23:36:58] loaded 124 logs
+[2021-05-12 23:36:58] loaded 3 users
+[2021-05-12 23:36:58] loaded 1 categories
+[2021-05-12 23:36:58] system ready
+[2021-05-12 23:37:02] admin login: romario
+[2021-05-12 23:37:32] romario registered test to the system
+[2021-05-12 23:38:31] loaded 130 logs
+[2021-05-12 23:38:31] loaded 4 users
+[2021-05-12 23:38:31] loaded 1 categories
+[2021-05-12 23:38:31] system ready
+[2021-05-12 23:38:35] admin login: romario
+[2021-05-12 23:38:49] romario removed test from the system
+[2021-05-12 23:38:53] admin logout: romario
+[2021-05-12 23:40:48] loaded 137 logs
+[2021-05-12 23:40:48] loaded 3 users
+[2021-05-12 23:40:48] loaded 1 categories
+[2021-05-12 23:40:48] system ready
+[2021-05-12 23:40:52] clerk login: nenad
+[2021-05-12 23:41:20] nenad categorized 4 items
+[2021-05-12 23:41:37] nenad created category: Food
+[2021-05-12 23:41:39] nenad created category: Tech
+[2021-05-12 23:41:43] nenad created category: Other
+[2021-05-12 23:41:48] nenad removed category: c1
+[2021-05-12 23:41:55] nenad categorized 4 items
+[2021-05-12 23:42:12] loaded 148 logs
+[2021-05-12 23:42:12] loaded 3 users
+[2021-05-12 23:42:12] loaded 3 categories
+[2021-05-12 23:42:12] system ready
+[2021-05-12 23:42:16] clerk login: nenad
+[2021-05-12 23:42:24] loaded 153 logs
+[2021-05-12 23:42:24] loaded 3 users
+[2021-05-12 23:42:24] loaded 3 categories
+[2021-05-12 23:42:24] system ready
+[2021-05-12 23:42:29] clerk login: nenad
+[2021-05-12 23:42:42] loaded 158 logs
+[2021-05-12 23:42:42] loaded 3 users
+[2021-05-12 23:42:42] loaded 3 categories
+[2021-05-12 23:42:42] system ready
+[2021-05-12 23:42:46] clerk login: nenad
+[2021-05-12 23:42:57] clerk logout: nenad
+[2021-05-12 23:43:04] clerk login: nenad
+[2021-05-12 23:43:12] clerk logout: nenad
+[2021-05-12 23:43:13] system stopped
+[2021-05-12 23:47:26] loaded 167 logs
+[2021-05-12 23:47:26] loaded 3 users
+[2021-05-12 23:47:26] loaded 3 categories
+[2021-05-12 23:47:26] system ready
+[2021-05-12 23:47:29] admin login: romario
+[2021-05-12 23:47:52] admin logout: romario
+[2021-05-12 23:47:53] system stopped
+[2021-05-12 23:50:16] loaded 174 logs
+[2021-05-12 23:50:16] loaded 3 users
+[2021-05-12 23:50:16] loaded 3 categories
+[2021-05-12 23:50:16] system ready
+[2021-05-12 23:51:19] system stopped
+[2021-05-12 23:52:23] loaded 179 logs
+[2021-05-12 23:52:23] loaded 3 users
+[2021-05-12 23:52:23] loaded 3 categories
+[2021-05-12 23:52:23] system ready
+[2021-05-12 23:52:27] system stopped
+[2021-05-13 00:12:52] loaded 184 logs
+[2021-05-13 00:12:52] loaded 3 users
+[2021-05-13 00:12:52] loaded 3 categories
+[2021-05-13 00:12:52] system ready
+[2021-05-13 00:12:56] admin login: romario
+[2021-05-13 00:13:47] loaded 189 logs
+[2021-05-13 00:13:47] loaded 3 users
+[2021-05-13 00:13:47] loaded 3 categories
+[2021-05-13 00:13:47] system ready
+[2021-05-13 00:13:49] admin login: romario
+[2021-05-13 00:14:10] admin logout: romario
+[2021-05-13 00:14:11] system stopped
+[2021-05-13 00:14:53] loaded 196 logs
+[2021-05-13 00:14:53] loaded 3 users
+[2021-05-13 00:14:53] loaded 3 categories
+[2021-05-13 00:14:53] system ready
+[2021-05-13 00:15:02] clerk login: nenad
+[2021-05-13 00:15:09] clerk logout: nenad
+[2021-05-13 00:15:09] system stopped
+[2021-05-13 12:56:40] loaded 203 logs
+[2021-05-13 12:56:40] loaded 3 users
+[2021-05-13 12:56:40] loaded 3 categories
+[2021-05-13 12:56:40] system ready
+[2021-05-13 12:56:44] loaded 207 logs
+[2021-05-13 12:56:44] loaded 3 users
+[2021-05-13 12:56:44] loaded 3 categories
+[2021-05-13 12:56:44] system ready
+[2021-05-13 12:58:15] loaded 211 logs
+[2021-05-13 12:58:15] loaded 3 users
+[2021-05-13 12:58:15] loaded 3 categories
+[2021-05-13 12:58:15] system ready
+[2021-05-13 13:00:30] loaded 215 logs
+[2021-05-13 13:00:30] loaded 3 users
+[2021-05-13 13:00:30] loaded 3 categories
+[2021-05-13 13:00:30] system ready
+[2021-05-13 13:00:34] system stopped
+[2021-05-13 13:01:33] loaded 220 logs
+[2021-05-13 13:01:33] loaded 3 users
+[2021-05-13 13:01:33] loaded 3 categories
+[2021-05-13 13:01:33] system ready

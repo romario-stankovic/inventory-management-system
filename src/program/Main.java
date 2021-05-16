@@ -16,10 +16,11 @@ public class Main {
 	//Declare a DateTimeFormatter
 	public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 	//Create final fields that lead to file locations
-	public static final String userFilename = "data\\users.txt";
-	public static final String logFilename = "data\\logs.txt";
-	public static final String itemFilename = "data\\items.txt";
-	public static final String categoryFilename = "data\\categories.txt";
+	public static final String dirName = "data";
+	public static final String userFilename = dirName + "\\users.txt";
+	public static final String logFilename = dirName + "\\logs.txt";
+	public static final String itemFilename = dirName + "\\items.txt";
+	public static final String categoryFilename = dirName + "\\categories.txt";
 
 	//List of items
 	public static List<LogEvent> logs = new ArrayList<LogEvent>();
@@ -33,7 +34,12 @@ public class Main {
 	
 	public static void main(String[] args) {
 
-		//LoadData
+		//create data directory if it does not exist
+		if(!FileIO.dirExists(dirName)) {
+			FileIO.createDir(dirName);
+		}
+		
+		//Go through each file and load data, if the files do not exist, create them
 		if(FileIO.fileExists(logFilename)) {
 			loadLogsFromFile();
 		}else {
@@ -57,10 +63,11 @@ public class Main {
 			FileIO.createFile(itemFilename);
 		}
 		
-		//If there are no users in the system
-		if(users.size() == 0) {
-			Administrator admin = new Administrator("", "", "", "", UserType.Administrator);
-			admin.FirstTimeRegistration();
+		//If there are no users in the system, create temp admin and create user
+		while(users.size() == 0) {
+			Administrator tempAdmin = (Administrator)UserFactory.getUser("", "", "", "", UserType.Administrator);
+			//call the FirstTimeRegistrationFunction of the admin
+			tempAdmin.FirstTimeRegistration();
 		}
 		
 		//Log Event
@@ -98,24 +105,33 @@ public class Main {
 		//Ask the user to enter a username
 		do {
 			String username = input.next();
+			if(username.equals("cancel")){
+				return null;
+			}
 			userID = HelperFunctions.FindUserByUsername(users, username);
 			if(userID == -1) {
 				System.out.println("User does not exist, try again: ");
 			}
 		}while(userID == -1);
+		
 		//If we entered a correct username, ask the user to enter a password
 		System.out.println("Enter password: ");
+		String password;
 		while(true) {
-			String password;
 			password = input.next();
+			
+			if(password.equals("cancel")) {
+				break;
+			}
 			//If password matches, return the user
 			if(password.equals(users.get(userID).password)){
 				return users.get(userID);
 			}
+			
 			//if it does not match, display a message
-			System.out.println("Password does not match, try again: ");
+				System.out.println("Password does not match, try again: ");
 		}
-		
+		return null;
 	}
 	
 	private static void loadUsersFromFile() {

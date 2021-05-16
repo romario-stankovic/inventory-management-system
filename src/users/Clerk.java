@@ -1,5 +1,6 @@
 package users;
 
+import java.util.Collections;
 import java.util.Scanner;
 
 import program.Main;
@@ -80,7 +81,7 @@ public class Clerk extends User{
 		}
 		//Go through each category and print ID + Name
 		for(Category category : Main.categories) {
-			System.out.println(category.id + ": " + category.name);
+			System.out.println(category.toString());
 		}
 		//Print an empty line and pause the program
 		System.out.println("");
@@ -104,6 +105,9 @@ public class Clerk extends User{
 		do {
 			//get clerk input and check if category does not exist
 			categoryName = input.next();
+			if(categoryName.equals("cancel")) {
+				return;
+			}
 			id = HelperFunctions.FindCategoryByName(Main.categories, categoryName);
 			if(id != 0) {
 				//If we found a category with the same name, ask the clerk to try again
@@ -136,6 +140,9 @@ public class Clerk extends User{
 		System.out.println("Enter category name: ");
 		do {
 			categoryName = input.next();
+			if(categoryName.equals("cancel")) {
+				return;
+			}
 			id = HelperFunctions.FindCategoryByName(Main.categories, categoryName);
 			//check if we have the category, if not, display a message
 			if(id == 0) {
@@ -184,10 +191,16 @@ public class Clerk extends User{
 			HelperFunctions.Pause();
 		}
 		
-		for(Item item : Main.items) {
-			item.CalculateTotalMass();
-			System.out.println(item.name + "," + item.massPerUnit + "," + item.numberOfUnits + "," + item.GetTotalMass() + "," + Main.categories.get(item.category-1).toString());
+		for(Category c : Main.categories) {
+			System.out.println(c.name + ": ");
+			for(Item item : Main.items) {
+				if(item.category == c.id) {
+					item.CalculateTotalMass();
+					System.out.println("  " + item.toString());
+				}
+			}
 		}
+		System.out.println("");
 		HelperFunctions.Pause();
 	}
 	
@@ -215,9 +228,13 @@ public class Clerk extends User{
 		//If we have items and categories, we can sort items
 		
 		//create option for each category
-		String[] options = new String[Main.categories.size()];
-		for(int i=0; i<Main.categories.size(); i++) {
-			options[i] = Main.categories.get(i).name;
+		String[] options = new String[Main.categories.size()+1];
+		for(int i=0; i<=Main.categories.size(); i++) {
+			if(i != Main.categories.size()) {
+				options[i] = Main.categories.get(i).name;
+			}else if(i == Main.categories.size()) {
+				options[i] = "Cancel Categorization";
+			}
 		}
 		
 		//Go through each item
@@ -227,6 +244,11 @@ public class Clerk extends User{
 				continue;
 			}
 			int choice = HelperFunctions.DisplayMenu(options, "Select category for: " + item.name);
+			//If we did not choose the last option (cancel)
+			
+			if(choice == options.length) {
+				return;
+			}
 			item.category = choice;
 			numberOfItems++;
 		}
@@ -242,7 +264,6 @@ public class Clerk extends User{
 	}
 	
 	private void queueItemsForShipment() {
-		
 		
 		int numberOfItems = 0;
 		
@@ -366,6 +387,8 @@ public class Clerk extends User{
 			}
 			//Once done, clear inbound queue
 			Main.inboundItems.clear();
+			//Sort the items alphabetically
+			Collections.sort(Main.items);
 			//write items to file
 			Main.writeItemToFile();
 			Main.LogEvent(username + " took delivery of: " + numberOfItems + " items");

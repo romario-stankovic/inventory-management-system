@@ -75,8 +75,4 @@ public class HelperFunctions {
 		System.out.print("Press ENTER to continue...");
 		input.nextLine();
 	}
-	
-	public static void ClearScreen() {
-
-	}
 }

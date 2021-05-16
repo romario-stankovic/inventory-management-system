@@ -107,7 +107,7 @@ public class Driver extends User {
 		//Log Event
 		Main.LogEvent(username + " delivered: " + numberOfDeliveredItems + " items");
 		//Display a message
-		System.out.println("Items successfully added to delivery queue!");
+		System.out.println("Successfully added: " + numberOfDeliveredItems + " items to queue!");
 		HelperFunctions.Pause();
 	}
 	

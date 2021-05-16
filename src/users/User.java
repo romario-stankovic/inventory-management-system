@@ -16,5 +16,10 @@ public abstract class User implements UserActions{
 		this.lastName = lastName;
 		this.type = type;
 	}
-		
+	
+	@Override
+	public String toString() {
+		return username + ": (Name: " + name + ", Last Name: " + lastName + ", Type: " + type.toString() + ")";
+	}
+	
 }
