@@ -14,6 +14,7 @@ public class Data {
 	public static class LogEvent {
 		public LocalDateTime dateTime;
 		public String logText;
+		//Constructor
 		public LogEvent(LocalDateTime dateTime, String logText) {
 			this.dateTime = dateTime;
 			this.logText = logText;
@@ -29,6 +30,7 @@ public class Data {
 	public static class Category {
 		public int id;
 		public String name;
+		//Constructor
 		public Category(int id, String name) {
 			this.id = id;
 			this.name = name;
@@ -48,6 +50,7 @@ public class Data {
 		float totalMass;
 		public int category;
 		
+		//Contstructor
 		public Item (String name, float massPerUnit, int numberOfUnits, int category) {
 			this.name = name;
 			this.massPerUnit = massPerUnit;
@@ -55,11 +58,11 @@ public class Data {
 			this.category = category;
 		}
 		
-		public float GetTotalMass() {
+		public float getTotalMass() {
 			return totalMass;
 		}
 		
-		public void CalculateTotalMass() {
+		public void calculateTotalMass() {
 			totalMass = numberOfUnits * massPerUnit;
 		}
 

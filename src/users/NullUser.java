@@ -15,20 +15,20 @@ public class NullUser extends User {
 	public void userMenu() {
 		logIn();
 		System.out.println("You do not have an assigned role, logging out...");
-		HelperFunctions.Pause();
+		HelperFunctions.pause();
 		logOut();
 	}
 	
 	@Override
 	public void logIn() {
 		//Log Event
-		Main.LogEvent("user login: " + username); 
+		Main.logEvent("user login: " + username); 
 	}
 
 	@Override
 	public void logOut() {
 		//Log Event
-		Main.LogEvent("user logout: " + username); 
+		Main.logEvent("user logout: " + username); 
 	}
 
 

@@ -6,6 +6,7 @@ import users.*;
 
 //Factory design pattern
 public class UserFactory {
+	
 	public static User getUser(String username, String password, String name, String lastName, UserType type) {
 		
 		if(username == null || password == null || name == null || lastName == null || type == null) {
@@ -21,9 +22,10 @@ public class UserFactory {
 			return new Driver(username, password, name, lastName, type);
 		case Null:
 			return new NullUser(username, password, name, lastName, type);
-			default:
-				return null;
+		default:
+			return null;
 		}
 		
 	}
+	
 }

@@ -30,7 +30,7 @@ public class Administrator extends User {
 		int choice = 0;
 		do {
 			System.out.println("----------ADMINISTRATOR PANEL----------");
-			choice = HelperFunctions.DisplayMenu(options);
+			choice = HelperFunctions.displayMenu(options);
 			switch (choice) {
 			case 1:
 				listAllUsers();
@@ -57,13 +57,13 @@ public class Administrator extends User {
 	@Override
 	public void logIn() {
 		//Log Event
-		Main.LogEvent("admin login: " + username);
+		Main.logEvent("admin login: " + username);
 	}
 	
 	@Override
 	public void logOut() {
 		//Log Event
-		Main.LogEvent("admin logout: " + username);
+		Main.logEvent("admin logout: " + username);
 	}
 	
 	private void listAllUsers() {
@@ -73,7 +73,7 @@ public class Administrator extends User {
 			System.out.println(user.toString());
 		}
 		System.out.println("");
-		HelperFunctions.Pause();
+		HelperFunctions.pause();
 	}
 
 	public void FirstTimeRegistration() {
@@ -95,7 +95,7 @@ public class Administrator extends User {
 			if(username.equals("cancel")) {
 				return;
 			}
-			userID = HelperFunctions.FindUserByUsername(Main.users, username);
+			userID = HelperFunctions.findUserByUsername(Main.users, username);
 			if (userID != -1) {
 				System.out.println("Username already taken, please try again: ");
 			}
@@ -159,7 +159,7 @@ public class Administrator extends User {
 				}
 			}
 			//Ask the admin to select type of user he is creating
-			int choice = HelperFunctions.DisplayMenu(options, "Select type of user: ");
+			int choice = HelperFunctions.displayMenu(options, "Select type of user: ");
 			if(choice != options.length) {
 				userType = UserType.values()[choice - 1];
 			}else {
@@ -175,10 +175,10 @@ public class Administrator extends User {
 		Main.users.add(newUser);
 		Main.writeUsersToFile();
 		//Log Event
-		Main.LogEvent(this.username + " registered " + username + " to the system");
+		Main.logEvent(this.username + " registered " + username + " to the system");
 		//Display a message
 		System.out.println("User registerd successfully!");
-		HelperFunctions.Pause();
+		HelperFunctions.pause();
 
 	}
 
@@ -194,7 +194,7 @@ public class Administrator extends User {
 			if(username.equals("cancel")) {
 				return;
 			}
-			userID = HelperFunctions.FindUserByUsername(Main.users, username);
+			userID = HelperFunctions.findUserByUsername(Main.users, username);
 			if (userID == -1) {
 				//if we don't, ask the admin to try again
 				System.out.println("There is no user with that username, try again: ");
@@ -207,7 +207,7 @@ public class Administrator extends User {
 		//Ask the admin to chose what to modify
 		int choice;
 		do {
-			choice = HelperFunctions.DisplayMenu(options, "Select field to modify: ");
+			choice = HelperFunctions.displayMenu(options, "Select field to modify: ");
 			submenu: switch (choice) {
 			case 1:
 				//if the admin choose the username, check availability
@@ -219,13 +219,13 @@ public class Administrator extends User {
 					if(newUsername.equals("cancel")) {
 						break submenu;
 					}
-					newUserID = HelperFunctions.FindUserByUsername(Main.users, newUsername);
+					newUserID = HelperFunctions.findUserByUsername(Main.users, newUsername);
 					if (newUserID != -1) {
 						System.out.println("Username already taken, try again: ");
 					}
 				} while (newUserID != -1);
 				//Log Event
-				Main.LogEvent(username + " changed username of " + modifyUser.username + " to " + newUsername);
+				Main.logEvent(username + " changed username of " + modifyUser.username + " to " + newUsername);
 				//If the username is available, change the username of the user
 				modifyUser.username = newUsername;
 				break;
@@ -251,7 +251,7 @@ public class Administrator extends User {
 				//If the password matches, modify the user
 				modifyUser.password = newPassword;
 				//Log Event
-				Main.LogEvent(username + " changed password of " + modifyUser.username + " to " + newPassword);
+				Main.logEvent(username + " changed password of " + modifyUser.username + " to " + newPassword);
 
 				break;
 			case 3:
@@ -273,7 +273,7 @@ public class Administrator extends User {
 				//Modify user
 				modifyUser.name = newName;
 				//Log Event
-				Main.LogEvent(this.username + " changed name of " + modifyUser.username + " to " + newName);
+				Main.logEvent(this.username + " changed name of " + modifyUser.username + " to " + newName);
 
 				break;
 			case 4:
@@ -293,7 +293,7 @@ public class Administrator extends User {
 				//Modify user
 				modifyUser.lastName = newLastName;
 				//Log Event
-				Main.LogEvent(this.username + " changed last name of " + modifyUser.username + " to " + newLastName);
+				Main.logEvent(this.username + " changed last name of " + modifyUser.username + " to " + newLastName);
 				break;
 			case 5:
 				//if the admin is modifying userType
@@ -308,7 +308,7 @@ public class Administrator extends User {
 				}
 				
 				//Ask the admin to choose
-				int typeChoice = HelperFunctions.DisplayMenu(typeOptions, "Select type of user: ");
+				int typeChoice = HelperFunctions.displayMenu(typeOptions, "Select type of user: ");
 				//get type
 				if(typeChoice == typeOptions.length) {
 					break submenu;
@@ -321,7 +321,7 @@ public class Administrator extends User {
 				//Set user in main
 				Main.users.set(userID, modifyUser);
 				//Log event
-				Main.LogEvent(username + " changed type of " + modifyUser.username + " to " + UserType.values()[typeChoice - 1]);
+				Main.logEvent(username + " changed type of " + modifyUser.username + " to " + UserType.values()[typeChoice - 1]);
 
 				break;
 			}
@@ -331,7 +331,7 @@ public class Administrator extends User {
 		Main.writeUsersToFile();
 		//Display a message
 		System.out.println("User modified successfully!");
-		HelperFunctions.Pause();
+		HelperFunctions.pause();
 	}
 
 	private void deleteUser() {
@@ -347,7 +347,7 @@ public class Administrator extends User {
 			if(username.equals("cancel")) {
 				return;
 			}
-			userID = HelperFunctions.FindUserByUsername(Main.users, username);
+			userID = HelperFunctions.findUserByUsername(Main.users, username);
 			if (userID == -1) {
 				System.out.println("There is no user with that username, try again: ");
 			}
@@ -357,10 +357,10 @@ public class Administrator extends User {
 		//Save user file
 		Main.writeUsersToFile();
 		//Log Event
-		Main.LogEvent(this.username + " removed " + username + " from the system");
+		Main.logEvent(this.username + " removed " + username + " from the system");
 		//Display a message
 		System.out.println("User deleted successfully!");
-		HelperFunctions.Pause();
+		HelperFunctions.pause();
 	}
 
 	private void listLogs() {
@@ -371,7 +371,7 @@ public class Administrator extends User {
 		//Admin choice
 		int choice = 0;
 		do {
-			choice = HelperFunctions.DisplayMenu(options);
+			choice = HelperFunctions.displayMenu(options);
 			switch (choice) {
 			case 1:
 				//If admin choose to view logs from today, find every log with same year and day of year
@@ -380,7 +380,7 @@ public class Administrator extends User {
 						System.out.println(event.toString());
 					}
 				}
-				HelperFunctions.Pause();
+				HelperFunctions.pause();
 				break;
 			case 2:
 				//If admin choose to display logs from yesterday, find the date before today and display logs
@@ -389,7 +389,7 @@ public class Administrator extends User {
 						System.out.println(event.toString());
 					}
 				}
-				HelperFunctions.Pause();
+				HelperFunctions.pause();
 				break;
 			case 3:
 				//If the admin choose to display logs from 7 days ago, we check if the log date is in range
@@ -401,7 +401,7 @@ public class Administrator extends User {
 						}
 					}
 				}
-				HelperFunctions.Pause();
+				HelperFunctions.pause();
 				break;
 			case 4:
 				//If the admin choose to display logs from 30 days ago, we check if the log date is in range
@@ -413,7 +413,7 @@ public class Administrator extends User {
 						}
 					}
 				}
-				HelperFunctions.Pause();
+				HelperFunctions.pause();
 				break;
 			case 5:
 				//If we want the admin to enter a custom date
@@ -453,7 +453,7 @@ public class Administrator extends User {
 						}
 					}
 				}
-				HelperFunctions.Pause();
+				HelperFunctions.pause();
 				break;
 			}
 		} while (choice != 6);

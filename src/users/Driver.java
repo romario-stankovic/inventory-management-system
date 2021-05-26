@@ -27,7 +27,7 @@ public class Driver extends User {
 		int choice = 0;
 		do {
 			System.out.println("----------DRIVER MENU----------");
-			choice = HelperFunctions.DisplayMenu(options);
+			choice = HelperFunctions.displayMenu(options);
 			switch(choice) {
 			case 1:
 				deliverItems();
@@ -45,13 +45,13 @@ public class Driver extends User {
 	@Override
 	public void logIn() {
 		//Log event
-		Main.LogEvent("driver login: " + username);
+		Main.logEvent("driver login: " + username);
 	}
 	
 	@Override
 	public void logOut() {
 		//Log event
-		Main.LogEvent("driver logout: " + username);
+		Main.logEvent("driver logout: " + username);
 	}
 	
 	private void deliverItems() {
@@ -72,7 +72,7 @@ public class Driver extends User {
 			
 			//Search for the item in inbound queue
 			Item item = null;
-			int itemID = HelperFunctions.FindItemByName(Main.inboundItems, itemName);
+			int itemID = HelperFunctions.findItemByName(Main.inboundItems, itemName);
 			if(itemID != -1) {
 				//if we found the item, set item to the item in queue
 				item = Main.inboundItems.get(itemID);
@@ -84,7 +84,7 @@ public class Driver extends User {
 			}
 
 			//If we did not find the item in inbound queue, search for it in the main item list
-			itemID = HelperFunctions.FindItemByName(Main.items, itemName);
+			itemID = HelperFunctions.findItemByName(Main.items, itemName);
 			
 			if(itemID != -1) {
 				//if we found the item, clone it and add it to the inbound queue
@@ -102,13 +102,15 @@ public class Driver extends User {
 			int numberOfUnits = quantityInput();
 			item = new Item(itemName, massPerUnit, numberOfUnits, 0);
 			Main.inboundItems.add(item);
+			//Write items to filez
+			Main.writeItemToFile();
 			numberOfDeliveredItems += numberOfUnits;
 		}
 		//Log Event
-		Main.LogEvent(username + " delivered: " + numberOfDeliveredItems + " items");
+		Main.logEvent(username + " delivered: " + numberOfDeliveredItems + " items");
 		//Display a message
 		System.out.println("Successfully added: " + numberOfDeliveredItems + " items to queue!");
-		HelperFunctions.Pause();
+		HelperFunctions.pause();
 	}
 	
 	private void takeShipment() {
@@ -119,7 +121,7 @@ public class Driver extends User {
 		if(Main.outboundItems.size() == 0) {
 			//If we don't, display a message, pause the display and return back to user menu
 			System.out.println("There are no items for shipment");
-			HelperFunctions.Pause();
+			HelperFunctions.pause();
 			return;
 		}
 		
@@ -145,10 +147,11 @@ public class Driver extends User {
 		//If the choice was Y, clear outboundItems queue (meaning that the driver took shipment)
 		if(choice.equals("Y")) {
 			Main.outboundItems.clear();
-			Main.LogEvent(username + " took shipment of: " + itemCount + " items from the queue");
+			Main.writeItemToFile();
+			Main.logEvent(username + " took shipment of: " + itemCount + " items from the queue");
 			//Display a message
 			System.out.println("Shipment taken successfully!");
-			HelperFunctions.Pause();
+			HelperFunctions.pause();
 		}
 		
 	}

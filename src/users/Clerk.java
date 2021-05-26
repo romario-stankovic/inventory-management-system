@@ -29,7 +29,7 @@ public class Clerk extends User{
 		int choice = 0;
 		do {
 			System.out.println("----------CLERK MENU----------");
-			choice = HelperFunctions.DisplayMenu(options);
+			choice = HelperFunctions.displayMenu(options);
 			switch(choice) {
 			case 1:
 				listCategories();
@@ -63,13 +63,13 @@ public class Clerk extends User{
 	@Override
 	public void logIn() {
 		//Log Event
-		Main.LogEvent("clerk login: " + username);
+		Main.logEvent("clerk login: " + username);
 	}
 
 	@Override
 	public void logOut() {
 		//Log Event
-		Main.LogEvent("clerk logout: " + username);
+		Main.logEvent("clerk logout: " + username);
 	}
 	
 	private void listCategories() {
@@ -85,7 +85,7 @@ public class Clerk extends User{
 		}
 		//Print an empty line and pause the program
 		System.out.println("");
-		HelperFunctions.Pause();
+		HelperFunctions.pause();
 	}
 	
 	private void createCategory() {
@@ -108,7 +108,7 @@ public class Clerk extends User{
 			if(categoryName.equals("cancel")) {
 				return;
 			}
-			id = HelperFunctions.FindCategoryByName(Main.categories, categoryName);
+			id = HelperFunctions.findCategoryByName(Main.categories, categoryName);
 			if(id != 0) {
 				//If we found a category with the same name, ask the clerk to try again
 				System.out.println("Category already exists, try again: ");
@@ -119,11 +119,11 @@ public class Clerk extends User{
 		Main.categories.add(new Category(lastID + 1, categoryName));
 		Main.writeCategoriesToFile();
 		//Log event
-		Main.LogEvent(username + " created category: " + categoryName);
+		Main.logEvent(username + " created category: " + categoryName);
 		
 		//Display a message
 		System.out.println("Category created successfully!");
-		HelperFunctions.Pause();
+		HelperFunctions.pause();
 	}
 	
 	private void deleteCategory() {
@@ -131,7 +131,7 @@ public class Clerk extends User{
 		//if we don't have categories, then we don't have anything to delete
 		if(Main.categories.size() == 0) {
 			System.out.println("There are no categories to delete!");
-			HelperFunctions.Pause();
+			HelperFunctions.pause();
 			return;
 		}
 		//If we have categories, ask the clerk for input
@@ -143,7 +143,7 @@ public class Clerk extends User{
 			if(categoryName.equals("cancel")) {
 				return;
 			}
-			id = HelperFunctions.FindCategoryByName(Main.categories, categoryName);
+			id = HelperFunctions.findCategoryByName(Main.categories, categoryName);
 			//check if we have the category, if not, display a message
 			if(id == 0) {
 				System.out.println("Category does not exist, try again: ");
@@ -173,11 +173,11 @@ public class Clerk extends User{
 		Main.writeItemToFile();
 		
 		//Log Event
-		Main.LogEvent(username + " removed category: " + categoryName);
+		Main.logEvent(username + " removed category: " + categoryName);
 		
 		//Display a message
 		System.out.println("Category successfully removed!");
-		HelperFunctions.Pause();
+		HelperFunctions.pause();
 		
 	}
 	
@@ -188,20 +188,28 @@ public class Clerk extends User{
 		if(Main.items.size() == 0) {
 			//If there are no items, display a message
 			System.out.println("There are no items to display");
-			HelperFunctions.Pause();
+			HelperFunctions.pause();
 		}
 		
 		for(Category c : Main.categories) {
 			System.out.println(c.name + ": ");
 			for(Item item : Main.items) {
 				if(item.category == c.id) {
-					item.CalculateTotalMass();
+					item.calculateTotalMass();
 					System.out.println("  " + item.toString());
 				}
 			}
 		}
+		
+		System.out.println("Uncategorized: ");
+		for(Item i : Main.items) {
+			if(i.category == 0) {
+				System.out.println(i.toString());
+			}
+		}
+		
 		System.out.println("");
-		HelperFunctions.Pause();
+		HelperFunctions.pause();
 	}
 	
 	private void categorizeItems() {
@@ -211,7 +219,7 @@ public class Clerk extends User{
 		if(Main.items.size() == 0) {
 			//If we don't, display a message
 			System.out.println("There are no items to sort");
-			HelperFunctions.Pause();
+			HelperFunctions.pause();
 			return;
 		}
 		//number of items we categorized
@@ -221,7 +229,7 @@ public class Clerk extends User{
 		if(Main.categories.size() == 0) {
 			//If we don't, display a message
 			System.out.println("There are no categories to select from");
-			HelperFunctions.Pause();
+			HelperFunctions.pause();
 			return;
 		}
 		
@@ -243,7 +251,7 @@ public class Clerk extends User{
 				//If item has a category, skip it
 				continue;
 			}
-			int choice = HelperFunctions.DisplayMenu(options, "Select category for: " + item.name);
+			int choice = HelperFunctions.displayMenu(options, "Select category for: " + item.name);
 			//If we did not choose the last option (cancel)
 			
 			if(choice == options.length) {
@@ -259,7 +267,7 @@ public class Clerk extends User{
 		//Save items to file
 		Main.writeItemToFile();
 		//Log Event
-		Main.LogEvent(username + " categorized " + numberOfItems + " items");
+		Main.logEvent(username + " categorized " + numberOfItems + " items");
 		
 	}
 	
@@ -272,7 +280,7 @@ public class Clerk extends User{
 			if(Main.items.size() == 0) {
 				//If we don't have items, display a message
 				System.out.println("There are no items in invetory");
-				HelperFunctions.Pause();
+				HelperFunctions.pause();
 				return;
 			}
 			//Display a message to the clerk
@@ -284,7 +292,7 @@ public class Clerk extends User{
 				break;
 			}
 			//find the item in item list
-			int itemID = HelperFunctions.FindItemByName(Main.items, itemName);
+			int itemID = HelperFunctions.findItemByName(Main.items, itemName);
 			Item item = null;
 			if(itemID != -1) {
 				item = Main.items.get(itemID);
@@ -318,7 +326,7 @@ public class Clerk extends User{
 					Main.items.remove(item);
 				}
 				//Add the item to the queue
-				int outboundIndex = HelperFunctions.FindItemByName(Main.outboundItems, item.name);
+				int outboundIndex = HelperFunctions.findItemByName(Main.outboundItems, item.name);
 				if(outboundIndex == -1) {
 					Item queueItem = new Item(item.name, item.massPerUnit, quantity, item.category);
 					Main.outboundItems.add(queueItem);
@@ -334,10 +342,10 @@ public class Clerk extends User{
 		//Write items to file
 		Main.writeItemToFile();
 		//Log Event
-		Main.LogEvent(username + " queued " + numberOfItems + " items for shipment");
+		Main.logEvent(username + " queued " + numberOfItems + " items for shipment");
 		//Display a message
 		System.out.println("Successfully queued " + numberOfItems + " items for shipment");
-		HelperFunctions.Pause();
+		HelperFunctions.pause();
 	}
 	
 	private void takeDelivery() {
@@ -346,7 +354,7 @@ public class Clerk extends User{
 		if(Main.inboundItems.size() == 0) {
 			//If we don't, then we don't have any deliveries and stop the function
 			System.out.println("There are no deliveries");
-			HelperFunctions.Pause();
+			HelperFunctions.pause();
 			return;
 		}
 		
@@ -376,7 +384,7 @@ public class Clerk extends User{
 				//count the item
 				numberOfItems += item.numberOfUnits;
 				//check if we have that item already in the systems
-				int id = HelperFunctions.FindItemByName(Main.items, item.name);
+				int id = HelperFunctions.findItemByName(Main.items, item.name);
 				if( id != -1) {
 					//if we do, just add the units
 					Main.items.get(id).numberOfUnits += item.numberOfUnits;
@@ -391,10 +399,10 @@ public class Clerk extends User{
 			Collections.sort(Main.items);
 			//write items to file
 			Main.writeItemToFile();
-			Main.LogEvent(username + " took delivery of: " + numberOfItems + " items");
+			Main.logEvent(username + " took delivery of: " + numberOfItems + " items");
 			//Display a message
 			System.out.println("Successfully took delivery!");
-			HelperFunctions.Pause();
+			HelperFunctions.pause();
 		}
 	}
 	

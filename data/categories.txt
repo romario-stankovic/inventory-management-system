@@ -1,3 +1,1 @@
-1,Food
-2,Tech
-3,Other
+1,Tech

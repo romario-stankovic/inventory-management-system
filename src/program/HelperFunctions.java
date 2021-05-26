@@ -11,11 +11,11 @@ public class HelperFunctions {
 	
 	private static Scanner input = Main.input;
 	
-	public static int DisplayMenu(String[] menuOptions) {
-		return DisplayMenu(menuOptions, null);
+	public static int displayMenu(String[] menuOptions) {
+		return displayMenu(menuOptions, null);
 	}
 	
-	public static int DisplayMenu(String[] menuOptions, String message) {
+	public static int displayMenu(String[] menuOptions, String message) {
 		
 		if(message == null) {
 			message = "Select option: ";
@@ -43,7 +43,7 @@ public class HelperFunctions {
 		return choice;
 	}
 	
-	public static int FindUserByUsername(List<User> users, String username) {
+	public static int findUserByUsername(List<User> users, String username) {
 		for(int i=0; i<users.size(); i++) {
 			if(users.get(i).username.equals(username)) {
 				return i;
@@ -52,7 +52,7 @@ public class HelperFunctions {
 		return -1;
 	}
 	
-	public static int FindCategoryByName(List<Category> categories, String categoryName) {
+	public static int findCategoryByName(List<Category> categories, String categoryName) {
 		for(int i=0; i<categories.size(); i++) {
 			if(categories.get(i).name.equals(categoryName)) {
 				return categories.get(i).id;
@@ -61,7 +61,7 @@ public class HelperFunctions {
 		return 0;
 	}
 	
-	public static int FindItemByName(List<Item> items, String itemName) {
+	public static int findItemByName(List<Item> items, String itemName) {
 		for(int i=0; i<items.size(); i++) {
 			if(items.get(i).name.equals(itemName)) {
 				return i;
@@ -70,7 +70,7 @@ public class HelperFunctions {
 		return -1;
 	}
 	
-	public static void Pause() {
+	public static void pause() {
 		input.nextLine();
 		System.out.print("Press ENTER to continue...");
 		input.nextLine();

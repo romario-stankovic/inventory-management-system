@@ -222,3 +222,31 @@
 [2021-05-13 13:01:33] loaded 3 users
 [2021-05-13 13:01:33] loaded 3 categories
 [2021-05-13 13:01:33] system ready
+[2021-05-17 21:12:09] loaded 224 logs
+[2021-05-17 21:12:09] loaded 3 users
+[2021-05-17 21:12:09] loaded 3 categories
+[2021-05-17 21:12:09] system ready
+[2021-05-17 21:12:36] driver login: akoso
+[2021-05-17 21:13:03] akoso delivered: 120 items
+[2021-05-17 21:13:09] driver logout: akoso
+[2021-05-17 21:13:12] clerk login: nenad
+[2021-05-17 21:13:26] nenad took delivery of: 120 items
+[2021-05-17 21:13:43] nenad categorized 1 items
+[2021-05-17 21:14:04] nenad removed category: Food
+[2021-05-17 21:14:18] nenad categorized 3 items
+[2021-05-17 21:14:45] nenad queued 99 items for shipment
+[2021-05-17 21:14:48] clerk logout: nenad
+[2021-05-17 21:14:51] driver login: akoso
+[2021-05-17 21:14:56] akoso took shipment of: 99 items from the queue
+[2021-05-17 21:15:04] driver logout: akoso
+[2021-05-17 21:15:08] admin login: romario
+[2021-05-17 21:16:14] admin logout: romario
+[2021-05-17 21:16:15] system stopped
+[2021-05-17 21:17:48] loaded 244 logs
+[2021-05-17 21:17:48] loaded 3 users
+[2021-05-17 21:17:48] loaded 2 categories
+[2021-05-17 21:17:48] system ready
+[2021-05-17 21:17:51] clerk login: nenad
+[2021-05-17 21:17:54] nenad removed category: Other
+[2021-05-17 21:18:08] clerk logout: nenad
+[2021-05-17 21:18:09] system stopped

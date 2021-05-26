@@ -71,7 +71,7 @@ public class Main {
 		}
 		
 		//Log Event
-		LogEvent("system ready");
+		logEvent("system ready");
 		
 		//Display options
 		String[] options = { "Login", "Exit" };
@@ -80,7 +80,7 @@ public class Main {
 		do {
 			User user = null;
 			System.out.println("----------MAIN MENU---------");
-			choice = HelperFunctions.DisplayMenu(options);
+			choice = HelperFunctions.displayMenu(options);
 			if(choice == 1) {
 				user = loginMenu();
 				//If the user is not null, log him in
@@ -93,7 +93,7 @@ public class Main {
 		//If the user exits the menu, display a message
 		System.out.println("Goodbye! :)");
 		//Log event
-		LogEvent("system stopped");
+		logEvent("system stopped");
 
 	}
 	
@@ -108,7 +108,7 @@ public class Main {
 			if(username.equals("cancel")){
 				return null;
 			}
-			userID = HelperFunctions.FindUserByUsername(users, username);
+			userID = HelperFunctions.findUserByUsername(users, username);
 			if(userID == -1) {
 				System.out.println("User does not exist, try again: ");
 			}
@@ -129,7 +129,7 @@ public class Main {
 			}
 			
 			//if it does not match, display a message
-				System.out.println("Password does not match, try again: ");
+			System.out.println("Password does not match, try again: ");
 		}
 		return null;
 	}
@@ -148,7 +148,7 @@ public class Main {
 			users.add(userObject);
 		}
 		//Log Event
-		Main.LogEvent("loaded " + users.size() +" users");
+		Main.logEvent("loaded " + users.size() +" users");
 	}
 	
 	private static void loadLogsFromFile() {
@@ -162,7 +162,7 @@ public class Main {
 			logs.add(new LogEvent(LocalDateTime.parse(dateText, formatter), logText));
 		}
 		//Log Event
-		Main.LogEvent("loaded " + logs.size() +" logs");
+		Main.logEvent("loaded " + logs.size() +" logs");
 	}
 	
 	private static void loadCategoriesFromFile() {
@@ -178,7 +178,7 @@ public class Main {
 			categories.add(new Category(id, fields[1]));
 		}
 		//Log Event
-		Main.LogEvent("loaded " + categories.size() +" categories");
+		Main.logEvent("loaded " + categories.size() +" categories");
 	}
 	
 	private static void loadItemsFromFile() {
@@ -188,7 +188,14 @@ public class Main {
 			//foreach line, split info
 			String[] fields = line.split(",");
 			//add item to list
-			items.add(new Item(fields[0], Float.parseFloat(fields[1]), Integer.parseInt(fields[2]), Integer.parseInt(fields[3])));
+			String listType = fields[4];
+			if(listType.equals("S")) {
+				items.add(new Item(fields[0], Float.parseFloat(fields[1]), Integer.parseInt(fields[2]), Integer.parseInt(fields[3])));
+			}else if(listType.equals("I")) {
+				inboundItems.add(new Item(fields[0], Float.parseFloat(fields[1]), Integer.parseInt(fields[2]), Integer.parseInt(fields[3])));
+			}else if(listType.equals("O")) {
+				outboundItems.add(new Item(fields[0], Float.parseFloat(fields[1]), Integer.parseInt(fields[2]), Integer.parseInt(fields[3])));
+			}
 		}
 	}
 	
@@ -231,16 +238,25 @@ public class Main {
 	public static void writeItemToFile() {
 		List<String> lines = new ArrayList<String>();
 		for(Item item : items) {
-			String line = item.name + "," + item.massPerUnit + "," + item.numberOfUnits + "," + item.category;
+			String line = item.name + "," + item.massPerUnit + "," + item.numberOfUnits + "," + item.category + ",S";
 			lines.add(line);
 		}
+		for(Item item : inboundItems) {
+			String line = item.name + "," + item.massPerUnit + "," + item.numberOfUnits + "," + item.category + ",I";
+			lines.add(line);
+		}
+		for(Item item : outboundItems) {
+			String line = item.name + "," + item.massPerUnit + "," + item.numberOfUnits + "," + item.category + ",O";
+			lines.add(line);
+		}
+		
 		
 		if(!FileIO.writeLines(itemFilename, lines.toArray(new String[lines.size()]))) {
 			System.out.println("Error while writing items to file...");
 		}
 	}
 	
-	public static void LogEvent(String eventText) {
+	public static void logEvent(String eventText) {
 		logs.add(new LogEvent(LocalDateTime.now(), eventText));
 		writeLogToFile();
 	}
