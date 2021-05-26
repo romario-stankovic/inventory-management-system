@@ -250,3 +250,55 @@
 [2021-05-17 21:17:54] nenad removed category: Other
 [2021-05-17 21:18:08] clerk logout: nenad
 [2021-05-17 21:18:09] system stopped
+[2021-05-27 00:22:06] loaded 252 logs
+[2021-05-27 00:22:06] loaded 3 users
+[2021-05-27 00:22:06] loaded 1 categories
+[2021-05-27 00:22:45] loaded 255 logs
+[2021-05-27 00:22:45] loaded 3 users
+[2021-05-27 00:22:45] loaded 1 categories
+[2021-05-27 00:22:45] system ready
+[2021-05-27 00:22:50] admin login: romario
+[2021-05-27 00:22:51] admin logout: romario
+[2021-05-27 00:22:54] clerk login: nenad
+[2021-05-27 00:23:15] nenad queued 5 items for shipment
+[2021-05-27 00:23:39] nenad queued 5 items for shipment
+[2021-05-27 00:23:50] clerk logout: nenad
+[2021-05-27 00:23:53] driver login: akoso
+[2021-05-27 00:24:00] akoso delivered: 25 items
+[2021-05-27 00:24:18] driver logout: akoso
+[2021-05-27 00:24:19] system stopped
+[2021-05-27 00:25:58] loaded 269 logs
+[2021-05-27 00:25:58] loaded 3 users
+[2021-05-27 00:25:58] loaded 1 categories
+[2021-05-27 00:25:58] system ready
+[2021-05-27 00:26:01] driver login: akoso
+[2021-05-27 00:26:09] akoso delivered: 50 items
+[2021-05-27 00:27:09] akoso took shipment of: 10 items from the queue
+[2021-05-27 00:27:16] driver logout: akoso
+[2021-05-27 00:27:20] clerk login: nenad
+[2021-05-27 00:27:24] nenad took delivery of: 50 items
+[2021-05-27 00:27:37] nenad queued 50 items for shipment
+[2021-05-27 00:27:46] clerk logout: nenad
+[2021-05-27 00:27:50] driver login: akoso
+[2021-05-27 00:28:00] akoso delivered: 10 items
+[2021-05-27 00:29:42] loaded 283 logs
+[2021-05-27 00:29:42] loaded 3 users
+[2021-05-27 00:29:42] loaded 1 categories
+[2021-05-27 00:29:42] system ready
+[2021-05-27 00:29:45] driver login: akoso
+[2021-05-27 00:30:01] akoso delivered: 11 items
+[2021-05-27 00:30:31] akoso took shipment of: 50 items from the queue
+[2021-05-27 00:30:34] driver logout: akoso
+[2021-05-27 00:30:36] system stopped
+[2021-05-27 00:30:38] loaded 292 logs
+[2021-05-27 00:30:38] loaded 3 users
+[2021-05-27 00:30:38] loaded 1 categories
+[2021-05-27 00:30:38] system ready
+[2021-05-27 00:30:42] clerk login: nenad
+[2021-05-27 00:30:47] nenad took delivery of: 11 items
+[2021-05-27 00:31:04] nenad queued 1 items for shipment
+[2021-05-27 00:31:08] clerk logout: nenad
+[2021-05-27 00:31:12] driver login: akoso
+[2021-05-27 00:31:16] akoso took shipment of: 1 items from the queue
+[2021-05-27 00:31:18] driver logout: akoso
+[2021-05-27 00:31:18] system stopped

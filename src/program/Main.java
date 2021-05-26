@@ -250,7 +250,6 @@ public class Main {
 			lines.add(line);
 		}
 		
-		
 		if(!FileIO.writeLines(itemFilename, lines.toArray(new String[lines.size()]))) {
 			System.out.println("Error while writing items to file...");
 		}

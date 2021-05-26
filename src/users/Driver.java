@@ -92,6 +92,7 @@ public class Driver extends User {
 				int quantity = quantityInput();
 				Item cloneItem = new Item(mainItem.name, mainItem.massPerUnit, quantity, 0);
 				Main.inboundItems.add(cloneItem);
+				Main.writeItemToFile();
 				numberOfDeliveredItems += quantity;
 				continue;
 			}

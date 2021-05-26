@@ -1,5 +1,5 @@
-Apple,0.15,34,0
-Banana,0.1,40,0
-Fridge,1.5,1,1
-Kiwi,0.05,1,0
-Plate,0.3,10,0
+Apple,0.15,34,0,S
+Banana,0.1,40,0,S
+Fridge,1.5,1,1,S
+Kiwi,0.05,1,0,S
+Plate,0.3,10,0,S
