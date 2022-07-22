@@ -17,6 +17,7 @@ Some features this program provides:
 
 ## 🧰 Languages & Tools
 
+<a href="https://www.eclipse.org/"><img src="https://cdn.cdnlogo.com/logos/e/57/eclipse.svg" width="30px" alt="Eclipse" title="Eclipse IDE"></a>
 <a href="https://www.java.com/en/"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" width="30px" alt="Java" title="Java Programming Language"></a>
 
 ## ⚡ Getting Started
